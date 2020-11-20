@@ -13,7 +13,6 @@ public class ReimStatus {
 	
 	@Id
 	@Column(name="status_id")
-	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int statusId;
 	
 	@Column(name="status_name")
@@ -54,6 +53,12 @@ public class ReimStatus {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+
+	@Override
+	public String toString() {
+		return "ReimStatus [statusId=" + statusId + ", status=" + status + "]";
+	}
+	
 	
 	
 }

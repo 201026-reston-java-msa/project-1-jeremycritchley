@@ -13,27 +13,26 @@ public class ReimType {
 	
 	@Id
 	@Column(name="type_id")
-	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int typeId;
 	
-	@Column(name="type_id")
+	@Column(name="type_name")
 	private String type;
 	
-	private ReimType() {
+	public ReimType() {
 		super();
 	}
 	
-	private ReimType(int typeId) {
+	public ReimType(int typeId) {
 		super();
 		this.setTypeId(typeId);
 	}
 	
-	private ReimType(String type) {
+	public ReimType(String type) {
 		super();
 		this.setType(type);
 	}
 	
-	private ReimType(int typeId, String type) {
+	public ReimType(int typeId, String type) {
 		super();
 		this.setTypeId(typeId);
 		this.setType(type);
@@ -53,6 +52,11 @@ public class ReimType {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	@Override
+	public String toString() {
+		return "ReimType [typeId=" + typeId + ", type=" + type + "]";
 	}
 	
 	

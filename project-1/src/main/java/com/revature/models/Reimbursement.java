@@ -27,16 +27,18 @@ public class Reimbursement {
 	@Column(name="reim_submitted", nullable=false)
 	private String submittedTime;
 	
-	@Column(name="reim_resolved", nullable=false)
+	@Column(name="reim_resolved")
 	private String resolvedTime;
 	
 	@Column(name="reim_description")
 	private String description;
 	
-	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	@JoinColumn(name="Author_FK")
 	private User author;
 	
-	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	@JoinColumn(name="Resolver_FK")
 	private User resolver;
 	
 	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
@@ -149,6 +151,14 @@ public class Reimbursement {
 	public void setType(ReimType type) {
 		this.type = type;
 	}
+
+	@Override
+	public String toString() {
+		return "Reimbursement [reimId=" + reimId + ", amount=" + amount + ", submittedTime=" + submittedTime
+				+ ", resolvedTime=" + resolvedTime + ", description=" + description + ", author=" + author
+				+ ", resolver=" + resolver + ", status=" + status + ", type=" + type + "]";
+	}
+	
 	
 	
 }
