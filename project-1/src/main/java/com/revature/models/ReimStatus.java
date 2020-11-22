@@ -30,6 +30,13 @@ public class ReimStatus {
 	public ReimStatus(String status) {
 		super();
 		this.status = status;
+		if (status.equals("PENDING")) {
+			this.statusId = 1;
+		} else if (status.equals("APPROVED")) {
+			this.statusId = 2;
+		} else if (status.equals("DENIED")) {
+			this.statusId = 3;
+		}
 	}
 	
 	public ReimStatus(int statusId, String status) {

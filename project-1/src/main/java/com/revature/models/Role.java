@@ -25,6 +25,12 @@ public class Role {
 	
 	public Role(String role) {
 		this.role = role;
+		if (role.equals("MANAGER")) {
+			this.roleId = 1;
+		}
+		else if (role.equals("EMPLOYEE")) {
+			this.roleId = 2;
+		}
 	}
 	
 	public Role(int roleId, String role) {

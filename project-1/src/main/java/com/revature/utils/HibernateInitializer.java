@@ -2,6 +2,7 @@ package com.revature.utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import com.revature.dao.GenericDAO;
 import com.revature.dao.ReimDAO;
@@ -24,14 +25,21 @@ public class HibernateInitializer {
 		// TODO Auto-generated method stub
 		GenericDAO<User> userd = new UserDAO();
 		System.out.println(userd.selectAll("first_name", "Jeremy"));
-		System.out.println(userd.selectById(1));
+		User man = userd.selectById(1);
+		System.out.println(man);
 		System.out.println(userd.selectAll("Role_FK", "2"));
 		
 		GenericDAO<Reimbursement> reimd = new ReimDAO();
-		System.out.println(reimd.selectAll("Status_FK", "1"));
+		List<Reimbursement> reims = reimd.selectAll("Status_FK", "1");
+		System.out.println(reims);
 		System.out.println(reimd.selectById(6));
 		
-		
+		Reimbursement r = reims.get(0);
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		Date d = new Date();
+		r.setResolvedTime(formatter.format(d));
+		r.setResolver(man);
+		reimd.update(r);
 	}
 
 	private static void initializeValues() {
@@ -59,7 +67,8 @@ public class HibernateInitializer {
 	    
 		Reimbursement reimLodge = new Reimbursement(500.00, formatter.format(date), null, "base lodging reim", employ, null, pend, lodge);
 		Reimbursement reimFood = new Reimbursement(500.00, formatter.format(date), null, "base food reim", employ, null, pend, food);
-		
+		User temp = new User();
+		temp.setUserId(1);
 		Date dateRes = new Date();
 		Reimbursement reimTravel = new Reimbursement(500.0, formatter.format(date), formatter.format(dateRes), "base travel reim", employ, manager, approved, travel);
 		Reimbursement reimOther = new Reimbursement(500.0, formatter.format(date), formatter.format(dateRes), "base other reim", employ, manager, denied, other);
@@ -71,7 +80,9 @@ public class HibernateInitializer {
 		reimd.insert(reimTravel);
 		reimd.insert(reimOther);
 		
-		
+		dateRes = new Date();
+		//Reimbursement reimFoodUpdate = new Reimbursement(3, 500.00, formatter.format(date), formatter.format(dateRes), "base food reim", employ, manager, pend, food);
+		//reimd.update(reimFoodUpdate);
 	}
 	
 }

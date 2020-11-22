@@ -30,6 +30,16 @@ public class ReimType {
 	public ReimType(String type) {
 		super();
 		this.setType(type);
+		
+		if (type.equals("LODGE")) {
+			this.typeId = 1;
+		} else if (type.equals("FOOD")){
+			this.typeId = 2;
+		} else if (type.equals("TRAVEL")){
+			this.typeId = 3;
+		} else if (type.equals("OTHER")){
+			this.typeId = 4;
+		}
 	}
 	
 	public ReimType(int typeId, String type) {
