@@ -7,6 +7,7 @@ import java.util.List;
 import com.revature.dao.GenericDAO;
 import com.revature.dao.ReimDAO;
 import com.revature.dao.UserDAO;
+import com.revature.dto.ReimDTO;
 import com.revature.models.ReimStatus;
 import com.revature.models.ReimType;
 import com.revature.models.Reimbursement;
@@ -35,11 +36,13 @@ public class HibernateInitializer {
 		System.out.println(reimd.selectById(6));
 		
 		Reimbursement r = reims.get(0);
+		ReimDTO rdto = new ReimDTO(r);
+		Reimbursement r2 = rdto.getReimInstance();
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		Date d = new Date();
-		r.setResolvedTime(formatter.format(d));
-		r.setResolver(man);
-		reimd.update(r);
+		r2.setResolvedTime(formatter.format(d));
+		r2.setResolver(man);
+		reimd.update(r2);
 	}
 
 	private static void initializeValues() {
@@ -80,7 +83,7 @@ public class HibernateInitializer {
 		reimd.insert(reimTravel);
 		reimd.insert(reimOther);
 		
-		dateRes = new Date();
+		//dateRes = new Date();
 		//Reimbursement reimFoodUpdate = new Reimbursement(3, 500.00, formatter.format(date), formatter.format(dateRes), "base food reim", employ, manager, pend, food);
 		//reimd.update(reimFoodUpdate);
 	}

@@ -1,5 +1,7 @@
 package com.revature.dto;
 
+import com.revature.dao.GenericDAO;
+import com.revature.dao.UserDAO;
 import com.revature.models.Role;
 import com.revature.models.User;
 
@@ -41,8 +43,12 @@ public class UserDTO {
 	}
 	
 	public User getUserInstance() {
+		GenericDAO<User> userd = new UserDAO();
+		return userd.selectById(Integer.parseInt(this.userId));
+	}
+	
+	public User createUserInstance() {
 		User u = new User();
-		u.setUserId(Integer.parseInt(userId));
 		u.setUsername(username);
 		u.setFirstName(firstName);
 		u.setLastName(lastName);
@@ -52,6 +58,5 @@ public class UserDTO {
 		u.setRole(role);
 		return u;
 	}
-	
 	
 }

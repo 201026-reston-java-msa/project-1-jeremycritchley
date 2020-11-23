@@ -1,5 +1,7 @@
 package com.revature.dto;
 
+import com.revature.dao.GenericDAO;
+import com.revature.dao.ReimDAO;
 import com.revature.dao.UserDAO;
 import com.revature.models.ReimStatus;
 import com.revature.models.ReimType;
@@ -25,6 +27,19 @@ public class ReimDTO {
 			String description, String author, String resolver, String status, String type) {
 		this.amount = amount;
 		this.reimId = reimId;
+		this.submittedTime = submittedTime;
+		this.resolvedTime = resolvedTime;
+		this.description = description;
+		this.author = author;
+		this.resolver = resolver;
+		this.status = status;
+		this.type = type;
+		
+	}
+	
+	public ReimDTO(String amount, String submittedTime, String resolvedTime,
+			String description, String author, String resolver, String status, String type) {
+		this.amount = amount;
 		this.submittedTime = submittedTime;
 		this.resolvedTime = resolvedTime;
 		this.description = description;
@@ -66,8 +81,12 @@ public class ReimDTO {
 	}
 	
 	public Reimbursement getReimInstance() {
+		GenericDAO<Reimbursement> reimd = new ReimDAO();
+		return reimd.selectById(Integer.parseInt(reimId));
+	}
+	
+	public Reimbursement createReimInstance() {
 		Reimbursement reim = new Reimbursement();
-		reim.setReimId(Integer.parseInt(this.reimId));
 		reim.setAmount(Double.parseDouble(this.amount));
 		reim.setSubmittedTime(this.submittedTime);
 		
