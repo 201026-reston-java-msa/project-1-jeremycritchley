@@ -1,13 +1,11 @@
 package com.revature.services;
 
 import com.revature.dto.UserDTO;
-import com.revature.models.User;
 
 public interface LoginService {
 	
-	public User login(String username, String password);
+	public UserDTO login(String username, String password);
 	
-	public User insert(UserDTO u);
-	
+	public UserDTO insert(UserDTO u);
 	
 }

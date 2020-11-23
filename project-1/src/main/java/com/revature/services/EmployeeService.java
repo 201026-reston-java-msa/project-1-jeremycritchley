@@ -7,9 +7,9 @@ import com.revature.dto.UserDTO;
 
 public interface EmployeeService {
 	
-	public UserDTO updateInfo(UserDTO udto);
+	public boolean updateInfo(UserDTO udto);
 	
-	public ReimDTO submitReim(ReimDTO rdto);
+	public int submitReim(ReimDTO rdto);
 	
 	public List<ReimDTO> viewRiemsByStatus(int ownerId, boolean resolved);
 	

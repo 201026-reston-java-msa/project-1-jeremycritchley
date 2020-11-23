@@ -25,7 +25,7 @@ public class HibernateInitializer {
 	private static void getValues() {
 		// TODO Auto-generated method stub
 		GenericDAO<User> userd = new UserDAO();
-		System.out.println(userd.selectAll("first_name", "Jeremy"));
+		System.out.println(userd.selectAll("user_id!", "0"));
 		User man = userd.selectById(1);
 		System.out.println(man);
 		System.out.println(userd.selectAll("Role_FK", "2"));
@@ -62,8 +62,8 @@ public class HibernateInitializer {
 		User employ = new User("employee", "passvvord", "Good", "Employee", "goodemployee@email.com", emp);
 		
 		GenericDAO<User> udao = new UserDAO();
-		udao.insert(manager);
-		udao.insert(employ);
+		System.out.println(udao.insert(manager));
+		System.out.println(udao.insert(employ));
 		
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");  
 	    Date date = new Date();
@@ -78,10 +78,10 @@ public class HibernateInitializer {
 		
 		GenericDAO<Reimbursement> reimd = new ReimDAO();
 		
-		reimd.insert(reimLodge);
-		reimd.insert(reimFood);
-		reimd.insert(reimTravel);
-		reimd.insert(reimOther);
+		System.out.println(reimd.insert(reimLodge));
+		System.out.println(reimd.insert(reimFood));
+		System.out.println(reimd.insert(reimTravel));
+		System.out.println(reimd.insert(reimOther));
 		
 		//dateRes = new Date();
 		//Reimbursement reimFoodUpdate = new Reimbursement(3, 500.00, formatter.format(date), formatter.format(dateRes), "base food reim", employ, manager, pend, food);

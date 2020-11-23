@@ -7,9 +7,11 @@ import com.revature.dto.UserDTO;
 
 public interface ManagerService {
 	
-	public ReimDTO approveReim(ReimDTO rdto);
+	public boolean approveReim(ReimDTO rdto, int resolver);
 	
-	public ReimDTO denyReim(ReimDTO rdto);
+	public boolean denyReim(ReimDTO rdto, int resolver);
 	
 	public List<UserDTO> viewAllEmployees();
+	
+	public UserDTO viewByUser(String username);
 }

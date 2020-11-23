@@ -111,5 +111,47 @@ public class ReimDTO {
 		
 		return reim;
 	}
+
+	public String getReimId() {
+		return reimId;
+	}
+
+	public void setReimId(String reimId) {
+		this.reimId = reimId;
+	}
+
+	public String getAmount() {
+		return amount;
+	}
+
+	public String getSubmittedTime() {
+		return submittedTime;
+	}
+
+	public String getResolvedTime() {
+		return resolvedTime;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public String getAuthor() {
+		return author;
+	}
+
+	public String getResolver() {
+		return resolver;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public String getType() {
+		return type;
+	}
+	
+	
 	
 }

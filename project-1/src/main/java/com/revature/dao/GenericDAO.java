@@ -11,25 +11,25 @@ import com.revature.utils.HibernateUtil;
 
 public abstract class GenericDAO<T> {
 	
-	public boolean insert(T t) {
-		boolean ret = true;
+	public int insert(T t) {
+		int ret = 0;
 		
 		Session ses = HibernateUtil.getSession();
 		
 		Transaction tx = ses.beginTransaction();
 		
-		ses.save(t);
+		ret = (Integer) ses.save(t);
 		
 		try {
 			tx.commit();
 		} catch (IllegalStateException e) {
 			System.out.println("hmmm");
 			e.printStackTrace();
-			ret = false;
+			ret = 0;
 		} catch (RollbackException e) {
 			System.out.println("hhhhhhhhhm");
 			e.printStackTrace();
-			ret = false;
+			ret = 0;
 		}
 		
 		
