@@ -20,21 +20,25 @@ public class ManagerServiceImpl extends EmployeeServiceImpl implements ManagerSe
 	
 	public ManagerServiceImpl() {
 		super();
-		reimd = new ReimDAO();
-		userd = new UserDAO();
 	}
 	
-	public ManagerServiceImpl(ReimDAO d) {
+	public ManagerServiceImpl(ReimDAO r) {
 		super();
-		reimd = d;
-		userd = new UserDAO();
+		reimd = r;
 	}
 
 	public ManagerServiceImpl(UserDAO d) {
 		super();
-		reimd = new ReimDAO();
 		userd = d;
 	}
+	
+	public ManagerServiceImpl(UserDAO d, ReimDAO r) {
+		super();
+		userd = d;
+		reimd = r;
+	}
+	
+	
 	
 	@Override
 	public boolean approveReim(ReimDTO rdto, int resolver) {
@@ -47,6 +51,14 @@ public class ManagerServiceImpl extends EmployeeServiceImpl implements ManagerSe
 	}
 	
 	private boolean updateReim(ReimDTO rdto, int resolver, int status) {
+		if (reimd == null) {
+			reimd = new ReimDAO();
+		}
+		
+		if (userd == null) {
+			userd = new UserDAO();
+		}
+		
 		boolean ret = false;
 		Reimbursement reim = rdto.getReimInstance(reimd);
 		User u = userd.selectById(resolver);
@@ -62,6 +74,10 @@ public class ManagerServiceImpl extends EmployeeServiceImpl implements ManagerSe
 
 	@Override
 	public List<UserDTO> viewAllEmployees() {
+		if (userd == null) {
+			userd = new UserDAO();
+		}
+		
 		List<User> employees = userd.selectAll("Role_FK", "2");
 		List<UserDTO> dtos = null;
 		if (employees != null) {
@@ -75,6 +91,10 @@ public class ManagerServiceImpl extends EmployeeServiceImpl implements ManagerSe
 	
 	@Override
 	public List<ReimDTO> viewRiemsByStatus(int ownerId, boolean resolved) {
+		if (reimd == null) {
+			reimd = new ReimDAO();
+		}
+		
 		String param = "Status_FK";
 		
 		if (!resolved)
@@ -95,6 +115,10 @@ public class ManagerServiceImpl extends EmployeeServiceImpl implements ManagerSe
 
 	@Override
 	public UserDTO viewByUser(String username) {
+		if (userd == null) {
+			userd = new UserDAO();
+		}
+		
 		String un = "username";
 		
 		User u = userd.selectByParam(un, username);

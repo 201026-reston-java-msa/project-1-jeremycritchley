@@ -153,63 +153,63 @@ public class DriverTest {
 	
 	@Test
 	public void testApproveReim() {
-		manServ = new ManagerServiceImpl(reimd);
+		manServ = new ManagerServiceImpl(userd, reimd);
 		Reimbursement reim = new Reimbursement(1, 500.00, "23/11/2020 14:36:10", "23/11/2020 14:36:10", "description", u, u, new ReimStatus(2), new ReimType(1));
 		ReimDTO rdto = Mockito.mock(ReimDTO.class);
 		when(rdto.createReimInstance()).thenReturn(reim);
 		when(rdto.getReimInstance(reimd)).thenReturn(reim);
 		
 		when(reimd.update(reim)).thenReturn(true);
+		when(userd.selectById(1)).thenReturn(u);
 		
 		assertEquals(manServ.approveReim(rdto, 1), true);
 	}
 	
 	@Test
 	public void testApproveReimFail() {
-		manServ = new ManagerServiceImpl(reimd);
+		manServ = new ManagerServiceImpl(userd, reimd);
 		Reimbursement reim = new Reimbursement(1, 500.00, "23/11/2020 14:36:10", "23/11/2020 14:36:10", "description", u, u, new ReimStatus(2), new ReimType(1));
 		ReimDTO rdto = Mockito.mock(ReimDTO.class);
 		when(rdto.createReimInstance()).thenReturn(reim);
 		when(rdto.getReimInstance(reimd)).thenReturn(reim);
 		
 		when(reimd.update(reim)).thenReturn(false);
+		when(userd.selectById(1)).thenReturn(u);
 		
 		assertEquals(manServ.approveReim(rdto, 0), false);
 	}
 	
 	@Test
 	public void testDenyReim() {
-		manServ = new ManagerServiceImpl(reimd);
+		manServ = new ManagerServiceImpl(userd, reimd);
 		Reimbursement reim = new Reimbursement(1, 500.00, "23/11/2020 14:36:10", "23/11/2020 14:36:10", "description", u, u, new ReimStatus(3), new ReimType(1));
 		ReimDTO rdto = Mockito.mock(ReimDTO.class);
 		when(rdto.createReimInstance()).thenReturn(reim);
 		when(rdto.getReimInstance(reimd)).thenReturn(reim);
 		
 		when(reimd.update(reim)).thenReturn(true);
+		when(userd.selectById(1)).thenReturn(u);
 		
 		assertEquals(manServ.denyReim(rdto, 1), true);
 	}
 	
 	@Test
 	public void testDenyReimFail() {
-		manServ = new ManagerServiceImpl(reimd);
+		manServ = new ManagerServiceImpl(userd, reimd);
 		Reimbursement reim = new Reimbursement(1, 500.00, "23/11/2020 14:36:10", "23/11/2020 14:36:10", "description", u, u, new ReimStatus(3), new ReimType(1));
 		ReimDTO rdto = Mockito.mock(ReimDTO.class);
 		when(rdto.createReimInstance()).thenReturn(reim);
 		when(rdto.getReimInstance(reimd)).thenReturn(reim);
 		
 		when(reimd.update(reim)).thenReturn(false);
+		when(userd.selectById(1)).thenReturn(u);
 		
 		assertEquals(manServ.denyReim(rdto, 0), false);
 	}
 	
 	@Test
 	public void testViewAllEmployees() {
-		manServ = new ManagerServiceImpl(reimd);
-		Reimbursement reim = new Reimbursement(1, 500.00, "23/11/2020 14:36:10", "23/11/2020 14:36:10", "description", u, u, new ReimStatus(2), new ReimType(1));
-		ReimDTO rdto = Mockito.mock(ReimDTO.class);
-		when(rdto.createReimInstance()).thenReturn(reim);
-		when(rdto.getReimInstance()).thenReturn(reim);
+		manServ = new ManagerServiceImpl(userd);
 		
 		when(userd.selectAll("Role_FK", "2")).thenReturn(new ArrayList<User>());
 		assertNotEquals(manServ.viewAllEmployees(), null);

@@ -18,31 +18,36 @@ public class EmployeeServiceImpl implements EmployeeService {
 	
 	public EmployeeServiceImpl() {
 		super();
-		reimd = new ReimDAO();
-		userd = new UserDAO();
 	}
 	
 	public EmployeeServiceImpl(ReimDAO d) {
 		super();
 		reimd = d;
-		userd = new UserDAO();
 	}
 
 	public EmployeeServiceImpl(UserDAO d) {
 		super();
-		reimd = new ReimDAO();
 		userd = d;
 	}
 
 	
 	@Override
 	public boolean updateInfo(UserDTO udto) {
+		if (userd == null) {
+			userd = new UserDAO();
+		}
+		
 		boolean ret = false;
 		
-		System.out.println(udto.getUserInstance(userd));
 		if (udto != null) {
-			ret = userd.update(udto.getUserInstance(userd));
-			System.out.println(ret);
+			//ret = userd.update(udto.getUserInstance(userd));
+			User u = udto.getUserInstance(userd);
+			u.setEmail(udto.getEmail());
+			u.setFirstName(udto.getFirstName());
+			u.setLastName(udto.getLastName());
+			u.setPassword(udto.getPassword());
+			u.setUsername(udto.getUsername());
+			ret = userd.update(u);
 		}
 		
 		return ret;
@@ -50,6 +55,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public int submitReim(ReimDTO rdto) {
+		if (reimd == null) {
+			reimd = new ReimDAO();
+		}
+		
 		int ret = 0;
 		if (rdto != null) {
 			Reimbursement reim = rdto.getReimInstance(reimd);
@@ -64,6 +73,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public List<ReimDTO> viewRiemsByStatus(int ownerId, boolean resolved) {
+		if (reimd == null) {
+			reimd = new ReimDAO();
+		}
 		
 		List<Reimbursement> reims = null;
 		List<ReimDTO> reimdtos = null;

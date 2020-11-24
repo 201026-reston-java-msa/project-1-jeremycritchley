@@ -8,18 +8,20 @@ import com.revature.dao.GenericDAO;
 import com.revature.dao.ReimDAO;
 import com.revature.dao.UserDAO;
 import com.revature.dto.ReimDTO;
+import com.revature.dto.UserDTO;
 import com.revature.models.ReimStatus;
 import com.revature.models.ReimType;
 import com.revature.models.Reimbursement;
 import com.revature.models.Role;
 import com.revature.models.User;
+import com.revature.services.EmployeeService;
+import com.revature.services.EmployeeServiceImpl;
 
 public class HibernateInitializer {
 	
 	public static void main(String[] args) {
 		initializeValues();
-		getValues();
-		
+		getValues();		
 	}
 
 	private static void getValues() {
