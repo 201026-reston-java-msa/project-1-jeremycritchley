@@ -82,6 +82,11 @@ public class ReimDTO {
 	
 	public Reimbursement getReimInstance() {
 		GenericDAO<Reimbursement> reimd = new ReimDAO();
+		return getReimInstance(reimd);
+	}
+	
+	public Reimbursement getReimInstance(GenericDAO<Reimbursement> rd) {
+		GenericDAO<Reimbursement> reimd = rd;
 		return reimd.selectById(Integer.parseInt(reimId));
 	}
 	

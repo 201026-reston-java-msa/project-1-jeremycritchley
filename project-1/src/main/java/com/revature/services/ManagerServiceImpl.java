@@ -3,6 +3,8 @@ package com.revature.services;
 import java.util.List;
 
 import com.revature.dao.GenericDAO;
+import com.revature.dao.ReimDAO;
+import com.revature.dao.UserDAO;
 import com.revature.dto.ReimDTO;
 import com.revature.dto.UserDTO;
 import com.revature.models.Reimbursement;
@@ -13,9 +15,29 @@ public class ManagerServiceImpl extends EmployeeServiceImpl implements ManagerSe
 	private GenericDAO<User> userd;
 	private GenericDAO<Reimbursement> reimd;
 	
+	public ManagerServiceImpl() {
+		super();
+		reimd = new ReimDAO();
+		userd = new UserDAO();
+	}
+	
+	public ManagerServiceImpl(ReimDAO d) {
+		super();
+		reimd = d;
+		userd = new UserDAO();
+	}
+
+	public ManagerServiceImpl(UserDAO d) {
+		super();
+		reimd = new ReimDAO();
+		userd = d;
+	}
+	
 	@Override
 	public boolean approveReim(ReimDTO rdto, int resolver) {
-		// TODO Auto-generated method stub
+		
+		//Reimbursement reim = rdto.getReimInstance();
+
 		return false;
 	}
 
