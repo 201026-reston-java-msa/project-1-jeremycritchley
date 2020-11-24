@@ -1,5 +1,6 @@
 package com.revature.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.revature.dao.GenericDAO;
@@ -37,13 +38,22 @@ public class ManagerServiceImpl extends EmployeeServiceImpl implements ManagerSe
 	
 	@Override
 	public boolean approveReim(ReimDTO rdto, int resolver) {
+		return updateReim(rdto, resolver, 2);
+	}
+
+	@Override
+	public boolean denyReim(ReimDTO rdto, int resolver) {
+		return updateReim(rdto, resolver, 3);
+	}
+	
+	private boolean updateReim(ReimDTO rdto, int resolver, int status) {
 		boolean ret = false;
 		Reimbursement reim = rdto.getReimInstance(reimd);
 		User u = userd.selectById(resolver);
 		if (u != null) {
 			reim.setResolver(u);
 			reim.setResolvedTime(DateStringify.stringifyNow());
-			reim.setStatus(new ReimStatus(2));
+			reim.setStatus(new ReimStatus(status));
 			ret = reimd.update(reim);
 		}
 
@@ -51,26 +61,48 @@ public class ManagerServiceImpl extends EmployeeServiceImpl implements ManagerSe
 	}
 
 	@Override
-	public boolean denyReim(ReimDTO rdto, int resolver) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public List<UserDTO> viewAllEmployees() {
-		// TODO Auto-generated method stub
-		return null;
+		List<User> employees = userd.selectAll("Role_FK", "2");
+		List<UserDTO> dtos = null;
+		if (employees != null) {
+			dtos = new ArrayList<UserDTO>();
+			for (User e: employees) {
+				dtos.add(new UserDTO(e));
+			}
+		}
+		return dtos;
 	}
 	
 	@Override
 	public List<ReimDTO> viewRiemsByStatus(int ownerId, boolean resolved) {
-		// TODO Auto-generated method stub
-		return null;
+		String param = "Status_FK";
+		
+		if (!resolved)
+			param = "Status_FK!";
+		
+		List<Reimbursement> reims = reimd.selectAll(param, "1");
+		List<ReimDTO> dtos = null;
+		
+		if (reims != null) {
+			dtos = new ArrayList<ReimDTO>();
+			for (Reimbursement r: reims) {
+				dtos.add(new ReimDTO(r));
+			}
+		}
+		
+		return dtos;
 	}
 
 	@Override
 	public UserDTO viewByUser(String username) {
-		// TODO Auto-generated method stub
-		return null;
+		String un = "username";
+		
+		User u = userd.selectByParam(un, username);
+		UserDTO dto = null;
+		if (u != null) {
+			dto = new UserDTO(u);
+		}
+		
+		return dto;
 	}
 }

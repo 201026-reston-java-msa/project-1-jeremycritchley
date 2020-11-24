@@ -150,19 +150,6 @@ public class DriverTest {
 		
 	}
 	
-	@Test
-	public void testViewReimByStatusInvalidStatus() {
-		empServ = new EmployeeServiceImpl(reimd);
-		Reimbursement reim = new Reimbursement(500.00, "23/11/2020 14:36:10", null, "description", u, null, new ReimStatus(1), new ReimType(1));
-		ReimDTO rdto = Mockito.mock(ReimDTO.class);
-		when(rdto.createReimInstance()).thenReturn(reim);
-		when(rdto.getReimInstance(reimd)).thenReturn(reim);
-		
-		when(reimd.selectAll("Author_FK", "1")).thenReturn(new ArrayList<Reimbursement>());
-		
-		assertEquals(empServ.viewRiemsByStatus(0, false), null);
-		
-	}
 	
 	@Test
 	public void testApproveReim() {
