@@ -7,8 +7,10 @@ import com.revature.dao.ReimDAO;
 import com.revature.dao.UserDAO;
 import com.revature.dto.ReimDTO;
 import com.revature.dto.UserDTO;
+import com.revature.models.ReimStatus;
 import com.revature.models.Reimbursement;
 import com.revature.models.User;
+import com.revature.utils.DateStringify;
 
 public class ManagerServiceImpl extends EmployeeServiceImpl implements ManagerService {
 	
@@ -35,10 +37,17 @@ public class ManagerServiceImpl extends EmployeeServiceImpl implements ManagerSe
 	
 	@Override
 	public boolean approveReim(ReimDTO rdto, int resolver) {
-		
-		//Reimbursement reim = rdto.getReimInstance();
+		boolean ret = false;
+		Reimbursement reim = rdto.getReimInstance(reimd);
+		User u = userd.selectById(resolver);
+		if (u != null) {
+			reim.setResolver(u);
+			reim.setResolvedTime(DateStringify.stringifyNow());
+			reim.setStatus(new ReimStatus(2));
+			ret = reimd.update(reim);
+		}
 
-		return false;
+		return ret;
 	}
 
 	@Override
