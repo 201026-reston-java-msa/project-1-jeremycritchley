@@ -311,5 +311,19 @@ public class DriverTest {
 		
 		
 	}
+	
+	@Test
+	public void testViewReimsByEmployee() {
+		
+		when(reimd.selectAll("Author_FK", "1")).thenReturn(new ArrayList<Reimbursement>());
+		assertNotEquals(manServ.viewReimsByEmployee(1), null);
+	}
+	
+	@Test
+	public void testViewReimsByEmployeeFail() {
+		
+		when(reimd.selectAll("Author_FK", "1")).thenReturn(null);
+		assertEquals(manServ.viewReimsByEmployee(1), null);
+	}
 
 }

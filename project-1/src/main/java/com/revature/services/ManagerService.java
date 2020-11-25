@@ -14,4 +14,6 @@ public interface ManagerService {
 	public List<UserDTO> viewAllEmployees();
 	
 	public UserDTO viewByUser(String username);
+	
+	public List<ReimDTO> viewReimsByEmployee(int ownerId);
 }

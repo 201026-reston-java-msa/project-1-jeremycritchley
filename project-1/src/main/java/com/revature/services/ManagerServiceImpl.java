@@ -95,22 +95,41 @@ public class ManagerServiceImpl extends EmployeeServiceImpl implements ManagerSe
 			reimd = new ReimDAO();
 		}
 		
-		String param = "Status_FK";
-		
-		if (!resolved)
-			param = "Status_FK!";
-		
-		List<Reimbursement> reims = reimd.selectAll(param, "1");
+		List<Reimbursement> reims = null;
 		List<ReimDTO> dtos = null;
 		
-		if (reims != null) {
-			dtos = new ArrayList<ReimDTO>();
-			for (Reimbursement r: reims) {
-				dtos.add(new ReimDTO(r));
+		if (ownerId == 0) { 
+			String param = "Status_FK";
+			
+			
+			
+			if (!resolved)
+				param = "Status_FK!";
+			
+			reims = reimd.selectAll(param, "1");
+			
+			if (reims != null) {
+				dtos = new ArrayList<ReimDTO>();
+				for (Reimbursement r: reims) {
+					dtos.add(new ReimDTO(r));
+				}
+			}
+		} else {
+			
+			String param = "Author_FK";
+			String val = Integer.toString(ownerId);
+			
+			reims = reimd.selectAll(param, val);
+			
+			if (reims != null) {
+				dtos = new ArrayList<ReimDTO>();
+				for (Reimbursement r: reims) {
+					dtos.add(new ReimDTO(r));
+				}
 			}
 		}
-		
 		return dtos;
+		
 	}
 
 	@Override
@@ -129,5 +148,30 @@ public class ManagerServiceImpl extends EmployeeServiceImpl implements ManagerSe
 			e.printStackTrace();
 		}
 		return dto;
+	}
+
+	@Override
+	public List<ReimDTO> viewReimsByEmployee(int ownerId) {
+		if (reimd == null) {
+			reimd = new ReimDAO();
+		}
+		
+		List<Reimbursement> reims = null;
+		List<ReimDTO> dtos = null;
+		
+		String param = "Author_FK";
+		String val = Integer.toString(ownerId);
+		
+		reims = reimd.selectAll(param, val);
+		
+		if (reims != null) {
+			dtos = new ArrayList<ReimDTO>();
+			for (Reimbursement r: reims) {
+				dtos.add(new ReimDTO(r));
+			}
+		}
+		
+		
+		return dtos;
 	}
 }
