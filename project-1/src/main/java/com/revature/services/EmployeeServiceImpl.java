@@ -36,6 +36,23 @@ public class EmployeeServiceImpl implements EmployeeService {
 		reimd = r;
 	}
 
+	@Override
+	public UserDTO viewByUser(String user_id) {
+		if (userd == null) {
+			userd = new UserDAO();
+		}
+		UserDTO dto = null;
+		try {
+			User u = userd.selectById(Integer.parseInt(user_id));
+			
+			if (u != null) {
+				dto = new UserDTO(u);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
+	}
 	
 	@Override
 	public boolean updateInfo(UserDTO udto) {
@@ -113,6 +130,31 @@ public class EmployeeServiceImpl implements EmployeeService {
 		}
 		
 		return reimdtos;
+	}
+	
+	@Override
+	public List<ReimDTO> viewReimsByEmployee(int ownerId) {
+		if (reimd == null) {
+			reimd = new ReimDAO();
+		}
+		
+		List<Reimbursement> reims = null;
+		List<ReimDTO> dtos = null;
+		
+		String param = "Author_FK";
+		String val = Integer.toString(ownerId);
+		
+		reims = reimd.selectAll(param, val);
+		
+		if (reims != null) {
+			dtos = new ArrayList<ReimDTO>();
+			for (Reimbursement r: reims) {
+				dtos.add(new ReimDTO(r));
+			}
+		}
+		
+		
+		return dtos;
 	}
 
 }

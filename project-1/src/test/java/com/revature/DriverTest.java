@@ -248,7 +248,7 @@ public class DriverTest {
 	
 	@Test
 	public void testViewByUser() {
-		manServ = new ManagerServiceImpl(userd);
+		empServ = new EmployeeServiceImpl(userd);
 		UserDTO udto = Mockito.mock(UserDTO.class);
 		User u = new User(1, "username", "password", "firstName", "lastName", "email", new Role(1, "MANAGER"));
 		when(udto.createUserInstance()).thenReturn(u);
@@ -256,7 +256,7 @@ public class DriverTest {
 		
 		when(userd.selectById(1)).thenReturn(u);
 		
-		assertNotEquals(manServ.viewByUser("1"), null);
+		assertNotEquals(empServ.viewByUser("1"), null);
 	}
 	
 	@Test
@@ -314,14 +314,14 @@ public class DriverTest {
 	
 	@Test
 	public void testViewReimsByEmployee() {
-		
+		empServ = new EmployeeServiceImpl(reimd);
 		when(reimd.selectAll("Author_FK", "1")).thenReturn(new ArrayList<Reimbursement>());
-		assertNotEquals(manServ.viewReimsByEmployee(1), null);
+		assertNotEquals(empServ.viewReimsByEmployee(1), null);
 	}
 	
 	@Test
 	public void testViewReimsByEmployeeFail() {
-		
+		manServ = new ManagerServiceImpl(reimd);
 		when(reimd.selectAll("Author_FK", "1")).thenReturn(null);
 		assertEquals(manServ.viewReimsByEmployee(1), null);
 	}
