@@ -4,6 +4,7 @@ import com.revature.dao.GenericDAO;
 import com.revature.dao.UserDAO;
 import com.revature.dto.UserDTO;
 import com.revature.models.User;
+import com.revature.utils.PasswordHash;
 
 public class LoginServiceImpl implements LoginService{
 
@@ -30,9 +31,10 @@ public class LoginServiceImpl implements LoginService{
 		
 		User user = userd.selectByParam(un, username);
 		UserDTO ret = null;
-
+		
 		if (user != null) {
-			if (password.equals(user.getPassword())) {
+			// hash password before checking equality
+			if (PasswordHash.checkMatch(password, user.getPassword())) {
 				ret = new UserDTO(user);
 			}
 		}

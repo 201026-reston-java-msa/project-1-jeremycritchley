@@ -61,7 +61,7 @@ public class HibernateInitializer {
 		ReimStatus denied = new ReimStatus(3, "DENIED");
 		
 		User manager = new User("jeremy", "passvvord", "Jeremy", "Critchley", "jeremy@email.com", man);
-		User employ = new User("employee", "passvvord", "Good", "Employee", "goodemployee@email.com", emp);
+		User employ = new User("employee", "password", "Good", "Employee", "goodemployee@email.com", emp);
 		
 		GenericDAO<User> udao = new UserDAO();
 		System.out.println(udao.insert(manager));

@@ -1,12 +1,7 @@
 package com.revature.dao;
 
 import java.util.List;
-
-import javax.persistence.RollbackException;
-
 import org.hibernate.Session;
-import org.hibernate.Transaction;
-
 import com.revature.models.User;
 import com.revature.utils.HibernateUtil;
 
@@ -18,8 +13,7 @@ public class UserDAO extends GenericDAO<User>{
 		List<User> userList;
 		String sql;
 		try  {
-			int n = Integer.parseInt(val);
-			sql = "from User where "+ param + "=" + val;
+			sql = "from User where "+ param + "=" + Integer.parseInt(val);
 		} catch (Exception e) {
 			sql = "from User where "+ param + "='" + val + "'";
 		}

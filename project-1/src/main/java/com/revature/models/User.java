@@ -11,9 +11,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.revature.utils.PasswordHash;
+
 @Entity
 @Table(name="App_User")
-public class User {
+public class User implements PasswordHash {
 	
 	@Id
 	@Column(name="user_id")
@@ -46,7 +48,7 @@ public class User {
 	public User(String username, String password, String firstName, String lastName, String email, Role role) {
 		super();
 		this.username = username;
-		this.password = password;
+		setPassword(password);
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
@@ -57,7 +59,7 @@ public class User {
 		super();
 		this.userId = userId;
 		this.username = username;
-		this.password = password;
+		setPassword(password);
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
@@ -84,8 +86,9 @@ public class User {
 		return password;
 	}
 
+	// hash password before assigning
 	public void setPassword(String password) {
-		this.password = password;
+		this.password = PasswordHash.generateHash(password);
 	}
 
 	public String getFirstName() {
