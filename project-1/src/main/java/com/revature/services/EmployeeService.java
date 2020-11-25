@@ -9,7 +9,7 @@ public interface EmployeeService {
 	
 	public boolean updateInfo(UserDTO udto);
 	
-	public int submitReim(ReimDTO rdto);
+	public int submitReim(ReimDTO rdto, int author);
 	
 	public List<ReimDTO> viewRiemsByStatus(int ownerId, boolean resolved);
 	

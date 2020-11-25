@@ -29,6 +29,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 		super();
 		userd = d;
 	}
+	
+	public EmployeeServiceImpl(UserDAO d, ReimDAO r) {
+		super();
+		userd = d;
+		reimd = r;
+	}
 
 	
 	@Override
@@ -54,14 +60,20 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public int submitReim(ReimDTO rdto) {
+	public int submitReim(ReimDTO rdto, int author) {
 		if (reimd == null) {
 			reimd = new ReimDAO();
 		}
 		
+		if (userd == null) {
+			userd = new UserDAO();
+		}
+		
 		int ret = 0;
+		
 		if (rdto != null) {
-			Reimbursement reim = rdto.getReimInstance(reimd);
+			rdto.setAuthor(author);
+			Reimbursement reim = rdto.createReimInstance((UserDAO) userd);
 			if (reim.getAmount() > 0) {
 				if (reim.getAuthor() != null) {
 					ret = reimd.insert(reim);

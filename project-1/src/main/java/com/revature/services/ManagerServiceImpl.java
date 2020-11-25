@@ -114,19 +114,20 @@ public class ManagerServiceImpl extends EmployeeServiceImpl implements ManagerSe
 	}
 
 	@Override
-	public UserDTO viewByUser(String username) {
+	public UserDTO viewByUser(String user_id) {
 		if (userd == null) {
 			userd = new UserDAO();
 		}
-		
-		String un = "username";
-		
-		User u = userd.selectByParam(un, username);
 		UserDTO dto = null;
-		if (u != null) {
-			dto = new UserDTO(u);
+		try {
+			User u = userd.selectById(Integer.parseInt(user_id));
+			
+			if (u != null) {
+				dto = new UserDTO(u);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		
 		return dto;
 	}
 }

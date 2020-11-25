@@ -90,7 +90,7 @@ public class ReimDTO {
 		return reimd.selectById(Integer.parseInt(reimId));
 	}
 	
-	public Reimbursement createReimInstance() {
+	public Reimbursement createReimInstance(UserDAO userd) {
 		Reimbursement reim = new Reimbursement();
 		reim.setAmount(Double.parseDouble(this.amount));
 		reim.setSubmittedTime(this.submittedTime);
@@ -101,11 +101,10 @@ public class ReimDTO {
 		
 		reim.setDescription(this.description);
 		
-		UserDAO userd = new UserDAO();
-		reim.setAuthor(userd.selectByParam("username", this.author));
+		reim.setAuthor(userd.selectById(Integer.parseInt(this.author)));
 		
 		if (!this.resolver.equals("N/A")) {
-			reim.setResolver(userd.selectByParam("username", this.resolver));
+			reim.setResolver(userd.selectByParam("user_id", this.resolver));
 		}
 		
 		ReimType rt = new ReimType(this.type);
@@ -155,6 +154,11 @@ public class ReimDTO {
 
 	public String getType() {
 		return type;
+	}
+
+	public void setAuthor(int author) {
+		this.author = Integer.toString(author);
+		
 	}
 	
 	

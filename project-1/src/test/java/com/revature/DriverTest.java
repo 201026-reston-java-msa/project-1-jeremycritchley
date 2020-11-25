@@ -85,41 +85,44 @@ public class DriverTest {
 	
 	@Test
 	public void testSubmitReim() {
-		empServ = new EmployeeServiceImpl(reimd);
+		empServ = new EmployeeServiceImpl(userd, reimd);
 		Reimbursement reim = new Reimbursement(500.00, "23/11/2020 14:36:10", null, "description", u, null, new ReimStatus(1), new ReimType(1));
 		ReimDTO rdto = Mockito.mock(ReimDTO.class);
-		when(rdto.createReimInstance()).thenReturn(reim);
+		when(rdto.createReimInstance(userd)).thenReturn(reim);
 		when(rdto.getReimInstance(reimd)).thenReturn(reim);
 		
 		when(reimd.insert(reim)).thenReturn(1);
+		when(userd.selectById(1)).thenReturn(u);
 		
-		assertEquals(empServ.submitReim(rdto), 1);
+		assertEquals(empServ.submitReim(rdto, 1), 1);
 	}
 	
 	@Test
 	public void testSubmitReimFailAmount() {
-		empServ = new EmployeeServiceImpl(reimd);
+		empServ = new EmployeeServiceImpl(userd, reimd);
 		Reimbursement reim = new Reimbursement(-500.00, "23/11/2020 14:36:10", null, "description", u, null, new ReimStatus(1), new ReimType(1));
 		ReimDTO rdto = Mockito.mock(ReimDTO.class);
-		when(rdto.createReimInstance()).thenReturn(reim);
+		when(rdto.createReimInstance(userd)).thenReturn(reim);
 		when(rdto.getReimInstance(reimd)).thenReturn(reim);
 		
 		when(reimd.insert(reim)).thenReturn(0);
+		when(userd.selectById(1)).thenReturn(u);
 		
-		assertEquals(empServ.submitReim(rdto), 0);
+		assertEquals(empServ.submitReim(rdto, 1), 0);
 	}
 	
 	@Test
 	public void testSubmitReimFailNullAuthor() {
-		empServ = new EmployeeServiceImpl(reimd);
+		empServ = new EmployeeServiceImpl(userd, reimd);
 		Reimbursement reim = new Reimbursement(500.00, "23/11/2020 14:36:10", null, "description", null, null, new ReimStatus(1), new ReimType(1));
 		ReimDTO rdto = Mockito.mock(ReimDTO.class);
-		when(rdto.createReimInstance()).thenReturn(reim);
+		when(rdto.createReimInstance(userd)).thenReturn(reim);
 		when(rdto.getReimInstance(reimd)).thenReturn(reim);
 		
 		when(reimd.insert(reim)).thenReturn(1);
+		when(userd.selectById(1)).thenReturn(u);
 		
-		assertEquals(empServ.submitReim(rdto), 0);
+		assertEquals(empServ.submitReim(rdto, 0), 0);
 	}
 	
 	@Test
@@ -127,7 +130,7 @@ public class DriverTest {
 		empServ = new EmployeeServiceImpl(reimd);
 		Reimbursement reim = new Reimbursement(500.00, "23/11/2020 14:36:10", null, "description", u, null, new ReimStatus(1), new ReimType(1));
 		ReimDTO rdto = Mockito.mock(ReimDTO.class);
-		when(rdto.createReimInstance()).thenReturn(reim);
+		when(rdto.createReimInstance(userd)).thenReturn(reim);
 		when(rdto.getReimInstance(reimd)).thenReturn(reim);
 		
 		when(reimd.selectAll("Author_FK", "1")).thenReturn(new ArrayList<Reimbursement>());
@@ -141,7 +144,7 @@ public class DriverTest {
 		empServ = new EmployeeServiceImpl(reimd);
 		Reimbursement reim = new Reimbursement(500.00, "23/11/2020 14:36:10", null, "description", u, null, new ReimStatus(1), new ReimType(1));
 		ReimDTO rdto = Mockito.mock(ReimDTO.class);
-		when(rdto.createReimInstance()).thenReturn(reim);
+		when(rdto.createReimInstance(userd)).thenReturn(reim);
 		when(rdto.getReimInstance(reimd)).thenReturn(reim);
 		
 		when(reimd.selectAll("Author_FK", "1")).thenReturn(null);
@@ -156,7 +159,7 @@ public class DriverTest {
 		manServ = new ManagerServiceImpl(userd, reimd);
 		Reimbursement reim = new Reimbursement(1, 500.00, "23/11/2020 14:36:10", "23/11/2020 14:36:10", "description", u, u, new ReimStatus(2), new ReimType(1));
 		ReimDTO rdto = Mockito.mock(ReimDTO.class);
-		when(rdto.createReimInstance()).thenReturn(reim);
+		when(rdto.createReimInstance(userd)).thenReturn(reim);
 		when(rdto.getReimInstance(reimd)).thenReturn(reim);
 		
 		when(reimd.update(reim)).thenReturn(true);
@@ -170,7 +173,7 @@ public class DriverTest {
 		manServ = new ManagerServiceImpl(userd, reimd);
 		Reimbursement reim = new Reimbursement(1, 500.00, "23/11/2020 14:36:10", "23/11/2020 14:36:10", "description", u, u, new ReimStatus(2), new ReimType(1));
 		ReimDTO rdto = Mockito.mock(ReimDTO.class);
-		when(rdto.createReimInstance()).thenReturn(reim);
+		when(rdto.createReimInstance(userd)).thenReturn(reim);
 		when(rdto.getReimInstance(reimd)).thenReturn(reim);
 		
 		when(reimd.update(reim)).thenReturn(false);
@@ -184,7 +187,7 @@ public class DriverTest {
 		manServ = new ManagerServiceImpl(userd, reimd);
 		Reimbursement reim = new Reimbursement(1, 500.00, "23/11/2020 14:36:10", "23/11/2020 14:36:10", "description", u, u, new ReimStatus(3), new ReimType(1));
 		ReimDTO rdto = Mockito.mock(ReimDTO.class);
-		when(rdto.createReimInstance()).thenReturn(reim);
+		when(rdto.createReimInstance(userd)).thenReturn(reim);
 		when(rdto.getReimInstance(reimd)).thenReturn(reim);
 		
 		when(reimd.update(reim)).thenReturn(true);
@@ -198,7 +201,7 @@ public class DriverTest {
 		manServ = new ManagerServiceImpl(userd, reimd);
 		Reimbursement reim = new Reimbursement(1, 500.00, "23/11/2020 14:36:10", "23/11/2020 14:36:10", "description", u, u, new ReimStatus(3), new ReimType(1));
 		ReimDTO rdto = Mockito.mock(ReimDTO.class);
-		when(rdto.createReimInstance()).thenReturn(reim);
+		when(rdto.createReimInstance(userd)).thenReturn(reim);
 		when(rdto.getReimInstance(reimd)).thenReturn(reim);
 		
 		when(reimd.update(reim)).thenReturn(false);
@@ -220,7 +223,7 @@ public class DriverTest {
 		manServ = new ManagerServiceImpl(reimd);
 		Reimbursement reim = new Reimbursement(1, 500.00, "23/11/2020 14:36:10", "23/11/2020 14:36:10", "description", new User(), new User(), new ReimStatus(2), new ReimType(1));
 		ReimDTO rdto = Mockito.mock(ReimDTO.class);
-		when(rdto.createReimInstance()).thenReturn(reim);
+		when(rdto.createReimInstance(userd)).thenReturn(reim);
 		when(rdto.getReimInstance(reimd)).thenReturn(reim);
 		
 		when(reimd.selectAll("Status_FK", "1")).thenReturn(new ArrayList<Reimbursement>());
@@ -234,7 +237,7 @@ public class DriverTest {
 		manServ = new ManagerServiceImpl(reimd);
 		Reimbursement reim = new Reimbursement(1, 500.00, "23/11/2020 14:36:10", "23/11/2020 14:36:10", "description", new User(), new User(), new ReimStatus(2), new ReimType(1));
 		ReimDTO rdto = Mockito.mock(ReimDTO.class);
-		when(rdto.createReimInstance()).thenReturn(reim);
+		when(rdto.createReimInstance(userd)).thenReturn(reim);
 		when(rdto.getReimInstance(reimd)).thenReturn(reim);
 		
 		when(reimd.selectAll("Status_FK!", "1")).thenReturn(new ArrayList<Reimbursement>());
@@ -251,9 +254,9 @@ public class DriverTest {
 		when(udto.createUserInstance()).thenReturn(u);
 		when(udto.getUserInstance(userd)).thenReturn(u);
 		
-		when(userd.selectByParam("username", "username")).thenReturn(u);
+		when(userd.selectById(1)).thenReturn(u);
 		
-		assertNotEquals(manServ.viewByUser("username"), null);
+		assertNotEquals(manServ.viewByUser("1"), null);
 	}
 	
 	@Test
@@ -264,9 +267,9 @@ public class DriverTest {
 		when(udto.createUserInstance()).thenReturn(u);
 		when(udto.getUserInstance(userd)).thenReturn(u);
 		
-		when(userd.selectByParam("username", null)).thenReturn(null);
+		when(userd.selectById(1)).thenReturn(null);
 		
-		assertEquals(manServ.viewByUser("username"), null);
+		assertEquals(manServ.viewByUser("1"), null);
 	}
 	
 	@Test
