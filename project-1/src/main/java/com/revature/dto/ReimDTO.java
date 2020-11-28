@@ -156,8 +156,8 @@ public class ReimDTO {
 		return type;
 	}
 
-	public void setAuthor(int author) {
-		this.author = Integer.toString(author);
+	public void setAuthor(String author) {
+		this.author = author;
 		
 	}
 	

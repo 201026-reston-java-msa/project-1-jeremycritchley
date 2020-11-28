@@ -1,10 +1,13 @@
 package com.revature.web;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class FrontController
@@ -19,7 +22,59 @@ public class FrontController extends HttpServlet {
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) {
     	final String[] URI = request.getRequestURI().replace("/project-1/", "").split("/");
-		System.out.println(URI);
+		System.out.println(URI[0]);
+		// try :
+		/* get session
+		 if (session == null) 
+		 	// route to login page
+		 else
+		 	if (URI.length > 1)
+		 		if (URI[1] == users)
+		 			// route to users servlet
+		 		else (if URI[1] == reims)
+		 			// route to reims
+		 	else
+		 		route to portal home page
+		*/
+		HttpSession session = request.getSession(false);
+		
+		if (session == null) {
+			try {
+				response.sendRedirect("login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else if (URI.length > 1) {
+			if (URI[1].equals("users")) {
+				// send to users 
+				
+			} else if (URI[1].equals("reims")) {
+				// send to reims helper 
+			} else {
+				try {
+					response.sendRedirect("portal");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		} else if (URI[0].equals("logout")) {
+			try {
+				response.sendRedirect("logout");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else {
+			try {
+				response.sendRedirect("portal");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		
 		switch(URI[0]) {
 		case "login":

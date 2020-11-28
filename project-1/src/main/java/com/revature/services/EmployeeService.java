@@ -11,10 +11,10 @@ public interface EmployeeService {
 	
 	public boolean updateInfo(UserDTO udto);
 	
-	public int submitReim(ReimDTO rdto, int author);
+	public int submitReim(ReimDTO rdto, String author);
 	
-	public List<ReimDTO> viewRiemsByStatus(int ownerId, boolean resolved);
+	public List<ReimDTO> viewRiemsByStatus(String ownerId, boolean resolved);
 	
-	public List<ReimDTO> viewReimsByEmployee(int ownerId);
+	public List<ReimDTO> viewReimsByEmployee(String ownerId);
 	
 }

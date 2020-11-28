@@ -77,7 +77,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public int submitReim(ReimDTO rdto, int author) {
+	public int submitReim(ReimDTO rdto, String author) {
 		if (reimd == null) {
 			reimd = new ReimDAO();
 		}
@@ -101,7 +101,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public List<ReimDTO> viewRiemsByStatus(int ownerId, boolean resolved) {
+	public List<ReimDTO> viewRiemsByStatus(String ownerId, boolean resolved) {
 		if (reimd == null) {
 			reimd = new ReimDAO();
 		}
@@ -110,7 +110,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		List<ReimDTO> reimdtos = null;
 		
 		String param = "Author_FK";
-		String val = Integer.toString(ownerId);
+		String val = ownerId;
 		
 		reims = reimd.selectAll(param, val);
 		
@@ -133,7 +133,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 	
 	@Override
-	public List<ReimDTO> viewReimsByEmployee(int ownerId) {
+	public List<ReimDTO> viewReimsByEmployee(String ownerId) {
 		if (reimd == null) {
 			reimd = new ReimDAO();
 		}
@@ -142,7 +142,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		List<ReimDTO> dtos = null;
 		
 		String param = "Author_FK";
-		String val = Integer.toString(ownerId);
+		String val = ownerId;
 		
 		reims = reimd.selectAll(param, val);
 		
