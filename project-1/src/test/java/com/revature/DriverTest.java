@@ -165,7 +165,7 @@ public class DriverTest {
 		when(reimd.update(reim)).thenReturn(true);
 		when(userd.selectById(1)).thenReturn(u);
 		
-		assertEquals(manServ.approveReim(rdto, 1), true);
+		assertEquals(manServ.approveReim(rdto, "1"), true);
 	}
 	
 	@Test
@@ -179,7 +179,7 @@ public class DriverTest {
 		when(reimd.update(reim)).thenReturn(false);
 		when(userd.selectById(1)).thenReturn(u);
 		
-		assertEquals(manServ.approveReim(rdto, 0), false);
+		assertEquals(manServ.approveReim(rdto, "0"), false);
 	}
 	
 	@Test
@@ -193,7 +193,7 @@ public class DriverTest {
 		when(reimd.update(reim)).thenReturn(true);
 		when(userd.selectById(1)).thenReturn(u);
 		
-		assertEquals(manServ.denyReim(rdto, 1), true);
+		assertEquals(manServ.denyReim(rdto, "1"), true);
 	}
 	
 	@Test
@@ -207,7 +207,7 @@ public class DriverTest {
 		when(reimd.update(reim)).thenReturn(false);
 		when(userd.selectById(1)).thenReturn(u);
 		
-		assertEquals(manServ.denyReim(rdto, 0), false);
+		assertEquals(manServ.denyReim(rdto, "0"), false);
 	}
 	
 	@Test

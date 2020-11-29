@@ -23,14 +23,6 @@
     transform: translateY(-50%);
 }
 
-#loginForm {
-    display: block;
-    margin-top: 5%;
-    margin-left: auto;
-    margin-right: auto;
-    width: 50%;
-}
-
 .body {
     background-color: #d4e8e8;
 }

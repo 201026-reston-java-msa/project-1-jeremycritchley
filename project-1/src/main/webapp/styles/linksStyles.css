@@ -1,0 +1,21 @@
+#links {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#links span {
+    flex: 33%;
+    padding: 10px;
+}
+
+@media screen and (max-width: 992px) {
+    #links span {
+        flex: 50%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    #links {
+        flex-direction: column;
+    }
+}

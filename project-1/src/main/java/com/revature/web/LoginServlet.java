@@ -35,7 +35,7 @@ public class LoginServlet extends HttpServlet {
 			response.sendRedirect("portal");
 		} else {
 			System.out.println("in login servlet");
-			request.getRequestDispatcher("login.html").forward(request, response);
+			request.getRequestDispatcher("index.html").forward(request, response);
 		}
 		
 		
@@ -57,12 +57,12 @@ public class LoginServlet extends HttpServlet {
 			ls = new LoginServiceImpl();
 			ObjectMapper om = new ObjectMapper();
 			
-			//LoginHelper lh = om.readValue(request.getReader(), LoginHelper.class);
+			LoginHelper lh = om.readValue(request.getReader(), LoginHelper.class);
 			
-			//String username = lh.getUsername();
-			//String password = lh.getPassword();
-			String username = request.getParameter("username");
-			String password = request.getParameter("password");
+			String username = lh.getUsername();
+			String password = lh.getPassword();
+			//String username = request.getParameter("username");
+			//String password = request.getParameter("password");
 			
 			UserDTO udto = ls.login(username, password);
 			

@@ -3,6 +3,7 @@ package com.revature.web;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -23,7 +24,7 @@ public class EmployeeHelper implements Helper {
 	
 	@Override
 	public void processRequest(HttpServletRequest request, HttpServletResponse response)
-			throws JsonParseException, JsonMappingException, IOException {
+			throws JsonParseException, JsonMappingException, IOException, ServletException {
 		session = request.getSession(false);
 
 		String[] URI = request.getRequestURI().replace("/project-1/", "").split("/");
@@ -72,9 +73,13 @@ public class EmployeeHelper implements Helper {
 				}
 			} else {
 				// serve employee home page
+				request.getRequestDispatcher("portal.html").forward(request, response);
 			}
 		} else {
 			// serve employee home page
+			
+			request.getRequestDispatcher("portal.html").forward(request, response);
+			
 		}
 	}
 	
