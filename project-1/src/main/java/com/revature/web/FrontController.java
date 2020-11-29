@@ -2,7 +2,6 @@ package com.revature.web;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +21,9 @@ public class FrontController extends HttpServlet {
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) {
     	final String[] URI = request.getRequestURI().replace("/project-1/", "").split("/");
-		System.out.println(URI[0]);
+    	for (String s : URI) {
+    		System.out.print(s);
+    	}
 		// try :
 		/* get session
 		 if (session == null) 
@@ -39,18 +40,29 @@ public class FrontController extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		
 		if (session == null) {
-			try {
-				response.sendRedirect("login");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			System.out.println("In front controller: login " + URI[0]);
+			if (URI.length > 1)
+				System.out.println("yeep " + URI[1]);
+			if (!URI[0].equals("login.html")) {
+				try {
+					//request.getRequestDispatcher("login.html").forward(request, response);
+					response.sendRedirect("/project-1/login");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} //catch (ServletException e) {
+					// TODO Auto-generated catch block
+				//	e.printStackTrace();
+				//}
 			}
 		} else if (URI.length > 1) {
 			if (URI[1].equals("users")) {
 				// send to users 
+				System.out.println("In front controller: users");
 				
 			} else if (URI[1].equals("reims")) {
 				// send to reims helper 
+				System.out.println("In front controller: reims");
 			} else {
 				try {
 					response.sendRedirect("portal");
@@ -60,6 +72,7 @@ public class FrontController extends HttpServlet {
 				}
 			}
 		} else if (URI[0].equals("logout")) {
+			System.out.println("In front controller: logout");
 			try {
 				response.sendRedirect("logout");
 			} catch (IOException e) {
@@ -67,6 +80,7 @@ public class FrontController extends HttpServlet {
 				e.printStackTrace();
 			}
 		} else {
+			System.out.println("In front controller: portal");
 			try {
 				response.sendRedirect("portal");
 			} catch (IOException e) {

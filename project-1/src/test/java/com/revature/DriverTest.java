@@ -94,7 +94,7 @@ public class DriverTest {
 		when(reimd.insert(reim)).thenReturn(1);
 		when(userd.selectById(1)).thenReturn(u);
 		
-		assertEquals(empServ.submitReim(rdto, 1), 1);
+		assertEquals(empServ.submitReim(rdto, "1"), 1);
 	}
 	
 	@Test
@@ -108,7 +108,7 @@ public class DriverTest {
 		when(reimd.insert(reim)).thenReturn(0);
 		when(userd.selectById(1)).thenReturn(u);
 		
-		assertEquals(empServ.submitReim(rdto, 1), 0);
+		assertEquals(empServ.submitReim(rdto, "1"), 0);
 	}
 	
 	@Test
@@ -122,7 +122,7 @@ public class DriverTest {
 		when(reimd.insert(reim)).thenReturn(1);
 		when(userd.selectById(1)).thenReturn(u);
 		
-		assertEquals(empServ.submitReim(rdto, 0), 0);
+		assertEquals(empServ.submitReim(rdto, "0"), 0);
 	}
 	
 	@Test
@@ -135,7 +135,7 @@ public class DriverTest {
 		
 		when(reimd.selectAll("Author_FK", "1")).thenReturn(new ArrayList<Reimbursement>());
 		
-		assertNotEquals(empServ.viewRiemsByStatus(1, false), null);
+		assertNotEquals(empServ.viewRiemsByStatus("1", false), null);
 		
 	}
 	
@@ -149,7 +149,7 @@ public class DriverTest {
 		
 		when(reimd.selectAll("Author_FK", "1")).thenReturn(null);
 		
-		assertEquals(empServ.viewRiemsByStatus(1, false), null);
+		assertEquals(empServ.viewRiemsByStatus("1", false), null);
 		
 	}
 	
@@ -228,7 +228,7 @@ public class DriverTest {
 		
 		when(reimd.selectAll("Status_FK", "1")).thenReturn(new ArrayList<Reimbursement>());
 		
-		assertNotEquals(manServ.viewRiemsByStatus(1, false), null);
+		assertNotEquals(manServ.viewRiemsByStatus("1", false), null);
 		
 	}
 	
@@ -242,7 +242,7 @@ public class DriverTest {
 		
 		when(reimd.selectAll("Status_FK!", "1")).thenReturn(new ArrayList<Reimbursement>());
 		
-		assertNotEquals(manServ.viewRiemsByStatus(1, true), null);
+		assertNotEquals(manServ.viewRiemsByStatus("1", true), null);
 		
 	}
 	
@@ -316,14 +316,14 @@ public class DriverTest {
 	public void testViewReimsByEmployee() {
 		empServ = new EmployeeServiceImpl(reimd);
 		when(reimd.selectAll("Author_FK", "1")).thenReturn(new ArrayList<Reimbursement>());
-		assertNotEquals(empServ.viewReimsByEmployee(1), null);
+		assertNotEquals(empServ.viewReimsByEmployee("1"), null);
 	}
 	
 	@Test
 	public void testViewReimsByEmployeeFail() {
 		manServ = new ManagerServiceImpl(reimd);
 		when(reimd.selectAll("Author_FK", "1")).thenReturn(null);
-		assertEquals(manServ.viewReimsByEmployee(1), null);
+		assertEquals(manServ.viewReimsByEmployee("1"), null);
 	}
 
 }

@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.revature.dao.GenericDAO;
 import com.revature.dao.ReimDAO;
+import com.revature.dao.StatusDAO;
 import com.revature.dao.UserDAO;
 import com.revature.dto.ReimDTO;
 import com.revature.dto.UserDTO;
@@ -39,11 +40,14 @@ public class HibernateInitializer {
 		
 		Reimbursement r = reims.get(0);
 		ReimDTO rdto = new ReimDTO(r);
+		rdto.setStatus("APPROVED");
 		Reimbursement r2 = rdto.getReimInstance();
+		
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		Date d = new Date();
 		r2.setResolvedTime(formatter.format(d));
 		r2.setResolver(man);
+		r2.setStatus(StatusDAO.selectById(2));
 		reimd.update(r2);
 	}
 

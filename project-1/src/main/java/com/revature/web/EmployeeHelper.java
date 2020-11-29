@@ -16,124 +16,56 @@ import com.revature.dto.UserDTO;
 import com.revature.services.EmployeeServiceImpl;
 
 public class EmployeeHelper implements Helper {
-	
+
 	ObjectMapper om = new ObjectMapper();
+	HttpSession session;
+	EmployeeServiceImpl es;
 	
 	@Override
-	public void processRequest(HttpServletRequest request, HttpServletResponse response) {
-		HttpSession session = request.getSession(false);
-		
+	public void processRequest(HttpServletRequest request, HttpServletResponse response)
+			throws JsonParseException, JsonMappingException, IOException {
+		session = request.getSession(false);
+
 		String[] URI = request.getRequestURI().replace("/project-1/", "").split("/");
-		EmployeeServiceImpl es = new EmployeeServiceImpl();
-		
+		es = new EmployeeServiceImpl();
+		for (String s: URI) {
+			System.out.println(s);
+		}
 		if (URI.length > 1) {
-			if (URI[1].equals("reims")) { 	// portal/reims/
-				if (URI.length == 2) {		// portal/reims
-					if ("POST".equals(request.getMethod())) {	//portal/reims method=POST
-						try {
-							ReimDTO rdto = om.readValue(request.getReader(), ReimDTO.class);
-							int reim_id = es.submitReim(rdto, (String) session.getAttribute("user_id"));
-							
-							if (reim_id != 0) {
-								rdto.setReimId(Integer.toString(reim_id));
-								response.setContentType("application/json");
-								response.getWriter().println(om.writeValueAsString(rdto));
-							} else {
-								response.setStatus(500);
-							}
-							
-						} catch (JsonParseException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (JsonMappingException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-				} else if (URI[2].equals("resolved")) {	// portal/reims/resolved
-					List<ReimDTO> reims = es.viewRiemsByStatus((String) session.getAttribute("user_id"), true);
-					if (reims != null) {
+			if (URI[1].equals("reims")) { // portal/reims/
+				// portal/reims
+				if ("POST".equals(request.getMethod())) { // portal/reims method=POST
+
+					ReimDTO rdto = om.readValue(request.getReader(), ReimDTO.class);
+					int reim_id = es.submitReim(rdto, (String) session.getAttribute("user_id"));
+
+					if (reim_id != 0) {
+						rdto.setReimId(Integer.toString(reim_id));
 						response.setContentType("application/json");
-						try {
-							response.getWriter().println(om.writeValueAsString(reims));
-						} catch (JsonProcessingException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+						response.getWriter().println(om.writeValueAsString(rdto));
 					} else {
 						response.setStatus(500);
 					}
-				} else if (URI[2].equals("pending")) {	// portal/reims/pending
-					List<ReimDTO> reims = es.viewRiemsByStatus((String) session.getAttribute("user_id"), false);
-					if (reims != null) {
-						response.setContentType("application/json");
-						try {
-							response.getWriter().println(om.writeValueAsString(reims));
-						} catch (JsonProcessingException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					} else {
-						response.setStatus(500);
-					}
-				} else if (URI[2].equals("all")) {		// portal/reims/all
-					List<ReimDTO> reims = es.viewReimsByEmployee((String) session.getAttribute("user_id"));
-					if (reims != null) {
-						response.setContentType("application/json");
-						try {
-							response.getWriter().println(om.writeValueAsString(reims));
-						} catch (JsonProcessingException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					} else {
-						response.setStatus(500);
-					}
+
+				} else {
+					reimsHelper(request, response);
 				}
-			} else if (URI[1].equals("users")) {	// portal/users
+			} else if (URI[1].equals("users")) { // portal/users
 				if ("PUT".equals(request.getMethod())) {
-					try {
-						UserDTO userUpdate = om.readValue(request.getReader(), UserDTO.class);
-						if (es.updateInfo(userUpdate)) {
-							session.setAttribute("username", userUpdate.getUsername());
-							response.setStatus(200);
-						} else {
-							response.setStatus(500);
-						}
-					} catch (JsonParseException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (JsonMappingException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+
+					UserDTO userUpdate = om.readValue(request.getReader(), UserDTO.class);
+					if (es.updateInfo(userUpdate)) {
+						session.setAttribute("username", userUpdate.getUsername());
+						response.setStatus(200);
+					} else {
+						response.setStatus(500);
 					}
-				} else if ("GET".equals(request.getMethod())){
+				} else if ("GET".equals(request.getMethod())) {
 					UserDTO udto = es.viewByUser(request.getParameter("user_id"));
 					if (udto != null) {
-						try {
-							response.getWriter().println(om.writeValueAsString(udto));
-						} catch (JsonProcessingException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+
+						response.getWriter().println(om.writeValueAsString(udto));
+
 					} else {
 						response.setStatus(400);
 					}
@@ -143,6 +75,44 @@ public class EmployeeHelper implements Helper {
 			}
 		} else {
 			// serve employee home page
+		}
+	}
+	
+	private void reimsHelper(HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException, IOException {
+		String status = request.getParameter("status");
+		if (status.equals("resolved")) { // portal/reims/resolved
+			List<ReimDTO> reims = es.viewRiemsByStatus((String) session.getAttribute("user_id"), true);
+			for (ReimDTO r: reims ) {
+				System.out.println(r.getDescription());
+			}
+			if (reims != null) {
+				response.setContentType("application/json");
+
+				response.getWriter().write(om.writeValueAsString(reims));
+
+			} else {
+				response.setStatus(500);
+			}
+		} else if (status.equals("pending")) { // portal/reims/pending
+			List<ReimDTO> reims = es.viewRiemsByStatus((String) session.getAttribute("user_id"), false);
+			if (reims != null) {
+				response.setContentType("application/json");
+
+				response.getWriter().write(om.writeValueAsString(reims));
+
+			} else {
+				response.setStatus(500);
+			}
+		} else if (status.equals("all")) { // portal/reims/all
+			List<ReimDTO> reims = es.viewReimsByEmployee((String) session.getAttribute("user_id"));
+			if (reims != null) {
+				response.setContentType("application/json");
+
+				response.getWriter().write(om.writeValueAsString(reims));
+
+			} else {
+				response.setStatus(500);
+			}
 		}
 	}
 }

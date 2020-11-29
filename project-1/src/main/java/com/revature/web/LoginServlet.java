@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.dto.UserDTO;
+import com.revature.models.LoginHelper;
 import com.revature.services.LoginService;
 import com.revature.services.LoginServiceImpl;
 
@@ -20,36 +21,6 @@ public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
 	private LoginService ls; 
-    
-	class LoginHelper {
-		private String username;
-		private String password;
-		
-		LoginHelper() {
-			
-		}
-		
-		LoginHelper(String username, String password) {
-			this.username = username; 
-			this.password = password;
-		}
-
-		public String getUsername() {
-			return username;
-		}
-
-		public void setUsername(String username) {
-			this.username = username;
-		}
-
-		public String getPassword() {
-			return password;
-		}
-
-		public void setPassword(String password) {
-			this.password = password;
-		}
-	}
 	
     public LoginServlet() {
         super();
@@ -62,9 +33,12 @@ public class LoginServlet extends HttpServlet {
 		
 		if (session != null ) {
 			response.sendRedirect("portal");
+		} else {
+			System.out.println("in login servlet");
+			request.getRequestDispatcher("login.html").forward(request, response);
 		}
 		
-		System.out.println("in login servlet");
+		
 		
 		
 	}
@@ -83,15 +57,18 @@ public class LoginServlet extends HttpServlet {
 			ls = new LoginServiceImpl();
 			ObjectMapper om = new ObjectMapper();
 			
-			LoginHelper lh = om.readValue(request.getReader(), LoginHelper.class);
+			//LoginHelper lh = om.readValue(request.getReader(), LoginHelper.class);
 			
-			String username = lh.getUsername();
-			String password = lh.getPassword();
+			//String username = lh.getUsername();
+			//String password = lh.getPassword();
+			String username = request.getParameter("username");
+			String password = request.getParameter("password");
 			
 			UserDTO udto = ls.login(username, password);
 			
 			// if user exists, login user
 			if (udto != null) {
+				System.out.println(udto);
 				session = request.getSession();
 				session.setAttribute("user_id", udto.getUserId());
 				session.setAttribute("username", udto.getUsername());

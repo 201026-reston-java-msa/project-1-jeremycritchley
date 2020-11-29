@@ -9,7 +9,7 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
-  <servlet>
+ <!--  <servlet>
     <description></description>
     <display-name>FrontController</display-name>
     <servlet-name>FrontController</servlet-name>
@@ -18,7 +18,7 @@
   <servlet-mapping>
     <servlet-name>FrontController</servlet-name>
     <url-pattern>/*</url-pattern>
-  </servlet-mapping>
+  </servlet-mapping>-->
   <servlet>
     <description></description>
     <display-name>LoginServlet</display-name>
@@ -37,7 +37,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>LogoutServlet</servlet-name>
-    <url-pattern>/LogoutServlet</url-pattern>
+    <url-pattern>/logout</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
@@ -47,6 +47,23 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>PortalServlet</servlet-name>
-    <url-pattern>/PortalServlet</url-pattern>
+    <url-pattern>/portal</url-pattern>
+    <url-pattern>/portal/reims</url-pattern>
+    <url-pattern>/portal/reims/*</url-pattern>
+     <url-pattern>/portal/users</url-pattern>
+     <url-pattern>/portal/users/*</url-pattern>
   </servlet-mapping>
+  <servlet>
+		<servlet-name>ErrorServlet</servlet-name> 
+		<servlet-class>com.revature.web.ErrorServlet</servlet-class>
+	</servlet>
+  <servlet-mapping>
+		<servlet-name>ErrorServlet</servlet-name> 
+		<url-pattern>/error</url-pattern>
+	</servlet-mapping>
+	
+	<error-page>
+		<error-code>404</error-code>
+		<location>/error</location>
+	</error-page>
 </web-app>

@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="Reim")
 public class Reimbursement {
@@ -34,18 +36,22 @@ public class Reimbursement {
 	
 	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	@JoinColumn(name="Author_FK")
+	@JsonIgnore
 	private User author;
 	
 	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	@JoinColumn(name="Resolver_FK")
+	@JsonIgnore
 	private User resolver;
 	
 	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	@JoinColumn(name="Status_FK")
+	@JsonIgnore
 	private ReimStatus status;
 	
 	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	@JoinColumn(name="Type_FK")
+	@JsonIgnore
 	private ReimType type;
 	
 	public Reimbursement() {

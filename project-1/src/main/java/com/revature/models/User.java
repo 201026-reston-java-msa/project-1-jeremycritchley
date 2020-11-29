@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.revature.utils.PasswordHash;
 
 @Entity
@@ -37,8 +38,10 @@ public class User implements PasswordHash {
 	@Column(name="email", unique=true, nullable=false)
 	private String email;
 	
+	
 	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	@JoinColumn(name="Role_FK")
+	@JsonIgnore
 	private Role role;
 	
 	public User() {

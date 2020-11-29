@@ -1,5 +1,6 @@
 package com.revature.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.revature.dao.GenericDAO;
 import com.revature.dao.ReimDAO;
 import com.revature.dao.UserDAO;
@@ -80,11 +81,13 @@ public class ReimDTO {
 		this.type = reim.getType().getType();
 	}
 	
+	@JsonIgnore
 	public Reimbursement getReimInstance() {
 		GenericDAO<Reimbursement> reimd = new ReimDAO();
 		return getReimInstance(reimd);
 	}
 	
+	@JsonIgnore
 	public Reimbursement getReimInstance(GenericDAO<Reimbursement> rd) {
 		GenericDAO<Reimbursement> reimd = rd;
 		return reimd.selectById(Integer.parseInt(reimId));
@@ -128,39 +131,63 @@ public class ReimDTO {
 		return amount;
 	}
 
+	public void setAmount(String amount) {
+		this.amount = amount;
+	}
+
 	public String getSubmittedTime() {
 		return submittedTime;
+	}
+
+	public void setSubmittedTime(String submittedTime) {
+		this.submittedTime = submittedTime;
 	}
 
 	public String getResolvedTime() {
 		return resolvedTime;
 	}
 
+	public void setResolvedTime(String resolvedTime) {
+		this.resolvedTime = resolvedTime;
+	}
+
 	public String getDescription() {
 		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public String getAuthor() {
 		return author;
 	}
 
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+
 	public String getResolver() {
 		return resolver;
+	}
+
+	public void setResolver(String resolver) {
+		this.resolver = resolver;
 	}
 
 	public String getStatus() {
 		return status;
 	}
 
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	public String getType() {
 		return type;
 	}
 
-	public void setAuthor(String author) {
-		this.author = author;
-		
+	public void setType(String type) {
+		this.type = type;
 	}
-	
-	
-	
 }

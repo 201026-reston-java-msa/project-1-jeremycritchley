@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.revature.dao.GenericDAO;
 import com.revature.dao.ReimDAO;
+import com.revature.dao.StatusDAO;
 import com.revature.dao.UserDAO;
 import com.revature.dto.ReimDTO;
 import com.revature.dto.UserDTO;
@@ -65,7 +66,7 @@ public class ManagerServiceImpl extends EmployeeServiceImpl implements ManagerSe
 		if (u != null) {
 			reim.setResolver(u);
 			reim.setResolvedTime(DateStringify.stringifyNow());
-			reim.setStatus(new ReimStatus(status));
+			reim.setStatus(StatusDAO.selectById(status));
 			ret = reimd.update(reim);
 		}
 
@@ -90,7 +91,7 @@ public class ManagerServiceImpl extends EmployeeServiceImpl implements ManagerSe
 	}
 	
 	@Override
-	public List<ReimDTO> viewRiemsByStatus(int ownerId, boolean resolved) {
+	public List<ReimDTO> viewRiemsByStatus(String ownerId, boolean resolved) {
 		if (reimd == null) {
 			reimd = new ReimDAO();
 		}
@@ -98,7 +99,7 @@ public class ManagerServiceImpl extends EmployeeServiceImpl implements ManagerSe
 		List<Reimbursement> reims = null;
 		List<ReimDTO> dtos = null;
 		
-		if (ownerId == 0) { 
+		if (ownerId.equals("0")) { 
 			String param = "Status_FK";
 			
 			
@@ -117,7 +118,7 @@ public class ManagerServiceImpl extends EmployeeServiceImpl implements ManagerSe
 		} else {
 			
 			String param = "Author_FK";
-			String val = Integer.toString(ownerId);
+			String val = ownerId;
 			
 			reims = reimd.selectAll(param, val);
 			
