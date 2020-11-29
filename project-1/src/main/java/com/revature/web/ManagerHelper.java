@@ -85,7 +85,7 @@ public class ManagerHelper implements Helper {
 			
 		} else if ((param = request.getParameter("id")) != null) {
 			// get reim by ID
-			response.getWriter().write(om.writeValueAsString(ms.viewReimsById("param")));
+			response.getWriter().write(om.writeValueAsString(ms.viewReimsById(param)));
 		} else if ("GET".equals(request.getMethod())) {
 			// get all reims
 			response.getWriter().write(om.writeValueAsString(ms.viewAllReims()));

@@ -85,6 +85,7 @@ public class ManagerServiceImpl extends EmployeeServiceImpl implements ManagerSe
 		if (employees != null) {
 			dtos = new ArrayList<UserDTO>();
 			for (User e: employees) {
+				System.out.println(e.getFirstName());
 				dtos.add(new UserDTO(e));
 			}
 		}
@@ -105,7 +106,7 @@ public class ManagerServiceImpl extends EmployeeServiceImpl implements ManagerSe
 			
 			
 			
-			if (!resolved)
+			if (resolved)
 				param = "Status_FK!";
 			
 			reims = reimd.selectAll(param, "1");
