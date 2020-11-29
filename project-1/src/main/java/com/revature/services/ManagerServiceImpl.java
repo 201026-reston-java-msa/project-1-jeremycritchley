@@ -42,16 +42,17 @@ public class ManagerServiceImpl extends EmployeeServiceImpl implements ManagerSe
 	
 	
 	@Override
-	public boolean approveReim(ReimDTO rdto, int resolver) {
+	public boolean approveReim(ReimDTO rdto, String resolver) {
 		return updateReim(rdto, resolver, 2);
 	}
 
 	@Override
-	public boolean denyReim(ReimDTO rdto, int resolver) {
+	public boolean denyReim(ReimDTO rdto, String resolver) {
+		
 		return updateReim(rdto, resolver, 3);
 	}
 	
-	private boolean updateReim(ReimDTO rdto, int resolver, int status) {
+	private boolean updateReim(ReimDTO rdto, String resolver, int status) {
 		if (reimd == null) {
 			reimd = new ReimDAO();
 		}
@@ -59,10 +60,10 @@ public class ManagerServiceImpl extends EmployeeServiceImpl implements ManagerSe
 		if (userd == null) {
 			userd = new UserDAO();
 		}
-		
+		int res = Integer.parseInt(resolver);
 		boolean ret = false;
 		Reimbursement reim = rdto.getReimInstance(reimd);
-		User u = userd.selectById(resolver);
+		User u = userd.selectById(res);
 		if (u != null) {
 			reim.setResolver(u);
 			reim.setResolvedTime(DateStringify.stringifyNow());
@@ -131,6 +132,37 @@ public class ManagerServiceImpl extends EmployeeServiceImpl implements ManagerSe
 		}
 		return dtos;
 		
+	}
+	
+	public ReimDTO viewReimsById(String reim_id) {
+		if (reimd == null) {
+			reimd = new ReimDAO();
+		}
+		
+		Reimbursement reim = reimd.selectById(Integer.parseInt(reim_id));
+		ReimDTO rdto = null;
+		if (reim != null) {
+			rdto = new ReimDTO(reim);
+		}
+		
+		return rdto;
+	}
+	
+	public List<ReimDTO> viewAllReims() {
+		if (reimd == null) {
+			reimd = new ReimDAO();
+		}
+		
+		List<Reimbursement> reims = reimd.selectAll("reim_id!", "0");
+		List<ReimDTO> rdtos = null;
+		if (reims != null) {
+			for (Reimbursement i: reims) {
+				rdtos.add(new ReimDTO(i));
+			}
+			
+		}
+		
+		return rdtos;
 	}
 
 	
