@@ -157,6 +157,7 @@ public class ManagerServiceImpl extends EmployeeServiceImpl implements ManagerSe
 		List<Reimbursement> reims = reimd.selectAll("reim_id!", "0");
 		List<ReimDTO> rdtos = null;
 		if (reims != null) {
+			rdtos = new ArrayList<ReimDTO>();
 			for (Reimbursement i: reims) {
 				rdtos.add(new ReimDTO(i));
 			}

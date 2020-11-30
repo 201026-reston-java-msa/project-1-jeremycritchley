@@ -36,7 +36,7 @@ public class EmployeeHelper implements Helper {
 			if (URI[1].equals("reims")) { // portal/reims/
 				// portal/reims
 				if ("POST".equals(request.getMethod())) { // portal/reims method=POST
-
+					System.out.println("in post for reims");
 					ReimDTO rdto = om.readValue(request.getReader(), ReimDTO.class);
 					int reim_id = es.submitReim(rdto, (String) session.getAttribute("user_id"));
 
@@ -85,11 +85,11 @@ public class EmployeeHelper implements Helper {
 	
 	private void reimsHelper(HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException, IOException, ServletException {
 		String status = request.getParameter("status");
+		System.out.println("Status = " + status );
 		if (status == null) {
 			System.out.println("Trying to show reim-view");
 			request.getRequestDispatcher("/reim-view.html").forward(request, response);
-		}
-		else if ("resolved".equals(status)) { // portal/reims/resolved
+		} else if ("resolved".equals(status)) { // portal/reims/resolved
 			List<ReimDTO> reims = es.viewRiemsByStatus((String) session.getAttribute("user_id"), true);
 			for (ReimDTO r: reims ) {
 				System.out.println(r.getDescription());
@@ -122,6 +122,9 @@ public class EmployeeHelper implements Helper {
 			} else {
 				response.setStatus(500);
 			}
+		} else if ("new".equals(status)) {
+			System.out.println("in new");
+			request.getRequestDispatcher("/new-reim.html").forward(request, response);
 		}
 	}
 }

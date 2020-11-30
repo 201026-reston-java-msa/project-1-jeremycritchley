@@ -29,13 +29,13 @@ public class ReimType {
 		super();
 		this.setType(type);
 		
-		if (type.equals("LODGE")) {
+		if (type.equalsIgnoreCase("LODGE")) {
 			this.typeId = 1;
-		} else if (type.equals("FOOD")){
+		} else if (type.equalsIgnoreCase("FOOD")){
 			this.typeId = 2;
-		} else if (type.equals("TRAVEL")){
+		} else if (type.equalsIgnoreCase("TRAVEL")){
 			this.typeId = 3;
-		} else if (type.equals("OTHER")){
+		} else if (type.equalsIgnoreCase("OTHER")){
 			this.typeId = 4;
 		}
 	}

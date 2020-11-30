@@ -2,6 +2,7 @@ package com.revature.web;
 
 import java.io.IOException;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -20,7 +21,7 @@ public class ManagerHelper implements Helper {
 	ManagerServiceImpl ms = new ManagerServiceImpl();
 	HttpSession session;
 	@Override
-	public void processRequest(HttpServletRequest request, HttpServletResponse response) throws JsonParseException, JsonMappingException, IOException {
+	public void processRequest(HttpServletRequest request, HttpServletResponse response) throws JsonParseException, JsonMappingException, IOException, ServletException {
 		String[] URI = request.getRequestURI().replace("/project-1/", "").split("/");
 		session = request.getSession(false);
 		if (URI.length > 1) {
@@ -40,34 +41,39 @@ public class ManagerHelper implements Helper {
 				usersHelper(request, response);
 			} else {
 				// serve manage home page
+				request.getRequestDispatcher("portal.html").forward(request, response);
 			}
 		} else {
 			// serve manager home page
+			request.getRequestDispatcher("portal.html").forward(request, response);
 		}
 		
 	}
 
-	private void usersHelper(HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException, IOException {
+	private void usersHelper(HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException, IOException, ServletException {
 		// TODO Auto-generated method stub
-		String param = null;
-		if ((param = request.getParameter("id")) != null) {
-			// get user by ID
-			// if user is manager, don't include a response
-			
-			// else, get the users reims and include them in response
-			UserDTO user = ms.viewByUser(param);
-			if (user != null) {
-				response.getWriter().write(om.writeValueAsString(user));
+		String param = request.getParameter("id");
+		if (param != null ) {
+			if (!param.equals("0")) {
+				// get user by ID
+				// if user is manager, don't include a response
+				
+				// else, get the users reims and include them in response
+				UserDTO user = ms.viewByUser(param);
+				if (user != null) {
+					response.getWriter().write(om.writeValueAsString(user));
+				}
+				
+				if (user.getRole().equals("EMPLOYEE")) {
+					response.getWriter().write(om.writeValueAsString(ms.viewReimsByEmployee(param)));
+				}
+			} else {
+				response.getWriter().write(om.writeValueAsString(ms.viewAllEmployees()));
 			}
-			
-			if (user.getRole().equals("EMPLOYEE")) {
-				response.getWriter().write(om.writeValueAsString(ms.viewReimsByEmployee(param)));
-			}
-			
 			
 		} else if ("GET".equals(request.getMethod())) {
 			// get all employees
-			response.getWriter().write(om.writeValueAsString(ms.viewAllEmployees()));
+			request.getRequestDispatcher("/view-employees.html").include(request, response);
 		}
 		
 	}
@@ -79,8 +85,10 @@ public class ManagerHelper implements Helper {
 			// get reims by status
 			if (param.equals("resolved")) {
 				response.getWriter().write(om.writeValueAsString(ms.viewRiemsByStatus("0", true)));
-			} else {
+			} else if (param.equals("pending")){
 				response.getWriter().write(om.writeValueAsString(ms.viewRiemsByStatus("0", false)));
+			} else if (param.equals("all")) {
+				response.getWriter().write(om.writeValueAsString(ms.viewAllReims()));
 			}
 			
 		} else if ((param = request.getParameter("id")) != null) {

@@ -16,7 +16,7 @@ function sendLogin() {
 	let xhr = new XMLHttpRequest();
 	xhr.onreadystatechange = function() {
 		if (this.readyState === 4 && this.status === 200) {
-			sessionStorage.setItem('currentUser',this.responseText);
+			//sessionStorage.setItem('currentUser',this.responseText);
 			window.location = "http://localhost:8080/project-1/portal";
 		} 
 		

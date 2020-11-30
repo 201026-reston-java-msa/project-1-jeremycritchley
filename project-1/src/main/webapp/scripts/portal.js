@@ -33,6 +33,14 @@ function doViewReims() {
     sendAjaxGet("http://localhost:8080/project-1/portal/reims", {});
 }
 
+function doViewNewReim() {
+	sendAjaxGet("http://localhost:8080/project-1/portal/reims?status=new", {});
+}
+
+function doViewEmployees() {
+	sendAjaxGet("http://localhost:8080/project-1/portal/users", {});
+}
+
 window.onload = function() {
 	sendAjaxGet("http://localhost:8080/project-1/session", populateUser);
 }

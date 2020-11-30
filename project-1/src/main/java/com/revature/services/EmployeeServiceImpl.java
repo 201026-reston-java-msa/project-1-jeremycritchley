@@ -10,6 +10,7 @@ import com.revature.dto.ReimDTO;
 import com.revature.dto.UserDTO;
 import com.revature.models.Reimbursement;
 import com.revature.models.User;
+import com.revature.utils.DateStringify;
 
 public class EmployeeServiceImpl implements EmployeeService {
 	
@@ -90,10 +91,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 		
 		if (rdto != null) {
 			rdto.setAuthor(author);
+			rdto.setSubmittedTime(DateStringify.stringifyNow());
 			Reimbursement reim = rdto.createReimInstance((UserDAO) userd);
 			if (reim.getAmount() > 0) {
 				if (reim.getAuthor() != null) {
 					ret = reimd.insert(reim);
+					System.out.println(ret);
 				}
 			}
 		}
