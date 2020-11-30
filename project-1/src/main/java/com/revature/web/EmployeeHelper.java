@@ -52,23 +52,29 @@ public class EmployeeHelper implements Helper {
 					reimsHelper(request, response);
 				}
 			} else if (URI[1].equals("users")) { // portal/users
-				if ("PUT".equals(request.getMethod())) {
-
+				if ("POST".equals(request.getMethod())) {
+					System.out.println("in PUT");
 					UserDTO userUpdate = om.readValue(request.getReader(), UserDTO.class);
 					if (es.updateInfo(userUpdate)) {
+						System.out.println("supposedly updated user");
 						session.setAttribute("username", userUpdate.getUsername());
 						response.setStatus(200);
 					} else {
-						response.setStatus(500);
+						response.setStatus(204);
 					}
 				} else if ("GET".equals(request.getMethod())) {
-					UserDTO udto = es.viewByUser(request.getParameter("user_id"));
-					if (udto != null) {
-
-						response.getWriter().println(om.writeValueAsString(udto));
-
+					String user_id = request.getParameter("id");
+					System.out.println("MAYBE IN GET???");
+					if (user_id != null) {
+						UserDTO udto = es.viewByUser(user_id);
+						if (udto != null) {
+							response.getWriter().println(om.writeValueAsString(udto));
+						} else {
+							response.setStatus(400);
+						}
 					} else {
-						response.setStatus(400);
+						System.out.println("Serving personal page");
+						request.getRequestDispatcher("/personal.html").forward(request, response);;
 					}
 				}
 			} else {

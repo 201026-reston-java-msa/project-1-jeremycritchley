@@ -9,10 +9,10 @@ function sendAjaxGet(url, func) {
 	xhr.open("GET", url, true);
 	xhr.send();
 };
-
+var res;
 function populateUser(xhr) {
 	if (xhr.responseText) {
-		var res = JSON.parse(xhr.responseText);
+		res = JSON.parse(xhr.responseText);
 		console.log(res);
 		if (res.username) {
 			document.getElementById("welcome-user").innerText = "Welcome, "
@@ -39,6 +39,10 @@ function doViewNewReim() {
 
 function doViewEmployees() {
 	sendAjaxGet("http://localhost:8080/project-1/portal/users", {});
+}
+
+function doViewPersonal() {
+	sendAjaxGet(`http://localhost:8080/project-1/portal/users`, {});
 }
 
 window.onload = function() {

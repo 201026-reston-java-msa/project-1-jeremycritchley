@@ -19,7 +19,7 @@ public class SessionServlet extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		if (session != null) {
 			response.setContentType("application/json");
-			response.getWriter().write("{\"username\":\""+session.getAttribute("username")+"\", \"role\":\""+session.getAttribute("role")+"\"}");
+			response.getWriter().write("{\"username\":\""+session.getAttribute("username")+"\", \"role\":\""+session.getAttribute("role")+"\", \"user_id\":\""+session.getAttribute("user_id")+"\"}");
 		} else {
 			response.setContentType("application/json");
 			response.getWriter().write("{\"username\":null, \"role\":null}");

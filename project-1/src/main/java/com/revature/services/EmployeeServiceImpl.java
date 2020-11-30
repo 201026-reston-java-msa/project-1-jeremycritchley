@@ -69,7 +69,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 			u.setEmail(udto.getEmail());
 			u.setFirstName(udto.getFirstName());
 			u.setLastName(udto.getLastName());
-			u.setPassword(udto.getPassword());
 			u.setUsername(udto.getUsername());
 			ret = userd.update(u);
 		}
