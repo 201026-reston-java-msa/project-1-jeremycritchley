@@ -29,6 +29,10 @@ function populateUser(xhr) {
 	}
 };
 
+function doViewReims() {
+    sendAjaxGet("http://localhost:8080/project-1/portal/reims", {});
+}
+
 window.onload = function() {
 	sendAjaxGet("http://localhost:8080/project-1/session", populateUser);
 }

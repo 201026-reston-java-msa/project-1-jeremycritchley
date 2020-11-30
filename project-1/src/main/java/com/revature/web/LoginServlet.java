@@ -51,7 +51,7 @@ public class LoginServlet extends HttpServlet {
 		
 		// if session is not null, show home page for that user
 		if (session != null ) {
-			response.sendRedirect("portal");
+			request.getRequestDispatcher("portal.html").forward(request, response);
 		} else {
 			// if session is null, check login post info
 			ls = new LoginServiceImpl();
