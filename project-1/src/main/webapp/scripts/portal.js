@@ -45,6 +45,10 @@ function doViewPersonal() {
 	sendAjaxGet(`http://localhost:8080/project-1/portal/users`, {});
 }
 
+function doResolveReims() {
+	sendAjaxGet(`http://localhost:8080/project-1/portal/reims/resolve`, {});
+}
+
 window.onload = function() {
 	sendAjaxGet("http://localhost:8080/project-1/session", populateUser);
 }

@@ -37,13 +37,12 @@ public class ManagerHelper implements Helper {
 						ms.denyReim(rdto, (String) session.getAttribute("user_id"));
 					}
 				
+				} else if (URI[2].equals("resolve")) {
+					request.getRequestDispatcher("/resolve-reims.html").include(request, response);
 				} else {
-					try {
-						int n = Integer.parseInt(URI[2]);
-						
-					} catch (Exception e) {
-						request.getRequestDispatcher("portal.html").forward(request, response);
-					}
+					
+					request.getRequestDispatcher("portal.html").forward(request, response);
+					
 				}
 			} else if (URI[1].equals("users")) {
 				usersHelper(request, response);
@@ -88,17 +87,37 @@ public class ManagerHelper implements Helper {
 				if (URI[2].equals("all")) {
 					System.out.println("Serving all view employees page");
 					request.getRequestDispatcher("/view-employees.html").include(request, response);
+				} else {
+					try {
+						
+						response.getWriter().write(om.writeValueAsString(ms.viewByUser(URI[2])));
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 				}
 			} else {
 				System.out.println("serving personal page");
 				request.getRequestDispatcher("/personal.html").forward(request, response);
 			}
 			
+		} else if ("POST".equals(request.getMethod())) {
+			if (URI.length == 3) {
+				if (URI[2].equals(session.getAttribute("user_id"))) {
+					UserDTO userUpdate = om.readValue(request.getReader(), UserDTO.class);
+					if (ms.updateInfo(userUpdate)) {
+						System.out.println("supposedly updated user");
+						session.setAttribute("username", userUpdate.getUsername());
+						response.setStatus(200);
+					} else {
+						response.setStatus(204);
+					}
+				}
+			}
 		}
 		
 	}
 
-	private void reimsHelper(HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException, IOException {
+	private void reimsHelper(HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException, IOException, ServletException {
 		// TODO Auto-generated method stub
 		String param = null;
 		if ((param = request.getParameter("status")) != null) {
@@ -116,7 +135,7 @@ public class ManagerHelper implements Helper {
 			response.getWriter().write(om.writeValueAsString(ms.viewReimsById(param)));
 		} else if ("GET".equals(request.getMethod())) {
 			// get all reims
-			response.getWriter().write(om.writeValueAsString(ms.viewAllReims()));
+			request.getRequestDispatcher("/reim-view.html").forward(request, response);
 		}
 		
 	}

@@ -126,63 +126,6 @@ function hideshow() {
     div.appendChild(input);
 }
 
-function updatePersonal(xhr) {
-    console.log("in UPDATE PERSONAL");
-
-    let username = document.getElementById("username_form");
-    let first_name = document.getElementById("fn_form");
-    let last_name = document.getElementById("ln_form");
-    let email = document.getElementById("email_form");
-
-    if (xhr.responseText) {
-        console.log("in UPDATE PERSONAL");
-        var personal = JSON.parse(xhr.responseText);
-        console.log(personal);
-        if (personal === undefined || personal.length === 0) {
-
-        } else {
-            
-            for (key in personal) {
-
-                if (key == "username") {
-                    personal[key] = username;
-                } else if (key == "firstName") {
-                    personal[key] = first_name;
-                } else if (key == "lastName") {
-                    personal[key] = last_name;
-                } else if (key == "email") {
-                    personal[key] = email;
-                }
-            }
-
-            let xhr2 = new XMLHttpRequest();
-            xhr2.onreadystatechange = function () {
-                if (this.readyState === 4 && this.status === 200) {
-                    //sessionStorage.setItem('currentUser',this.responseText);
-                    console.log("PUT SHOULD HAVE BEEN SUCCESSFUL")
-                    doPopulatePersonalInfo();
-                }
-
-                if (this.readyState === 4 && this.status === 204) {
-                    console.log("Failed")
-                    //alert("Failed to log in! Username or password is incorrect")
-                    let childDiv = document.getElementById("warningText");
-                    childDiv.textContent = "Failed to log in! Username or Password is incorrect";
-                }
-            }
-            console.log("TRYING TO PUT");
-            xhr2.open("POST", "http://localhost:8080/project-1/portal/users", true);
-
-            xhr2.send(JSON.stringify(personal));
-        }
-    }
-}
-
-function doUpdatePersonal() {
-    console.log("In DO UPDATE PERSONAL");
-    sendAjaxGet("http://localhost:8080/project-1/session", populateResUpdate);
-}
-
 $(document).ready(function () {
     $("#nav-bar").load("../nav.html");
     let b = document.getElementById('secondary_button');
