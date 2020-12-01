@@ -6,6 +6,7 @@ import java.util.List;
 import com.revature.dao.GenericDAO;
 import com.revature.dao.ReimDAO;
 import com.revature.dao.StatusDAO;
+import com.revature.dao.TypeDAO;
 import com.revature.dao.UserDAO;
 import com.revature.dto.ReimDTO;
 import com.revature.dto.UserDTO;
@@ -68,6 +69,15 @@ public class ManagerServiceImpl extends EmployeeServiceImpl implements ManagerSe
 			reim.setResolver(u);
 			reim.setResolvedTime(DateStringify.stringifyNow());
 			reim.setStatus(StatusDAO.selectById(status));
+			if (rdto.getType().equalsIgnoreCase("lodge")) {
+				reim.setType(TypeDAO.selectById(1));
+			} else if (rdto.getType().equalsIgnoreCase("food")) {
+				reim.setType(TypeDAO.selectById(2));
+			} else if (rdto.getType().equalsIgnoreCase("travel")) {
+				reim.setType(TypeDAO.selectById(3));
+			} else if (rdto.getType().equalsIgnoreCase("other")) {
+				reim.setType(TypeDAO.selectById(4));
+			}
 			ret = reimd.update(reim);
 		}
 

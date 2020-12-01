@@ -10,6 +10,26 @@ function sendAjaxGet(url, func) {
 	xhr.send();
 };
 
+function sendAjaxPost(url, func, ReimDTO, id, status) {
+    console.log("in ajax post");
+    console.log(id);
+    console.log(ReimDTO)
+	var xhr = new XMLHttpRequest()
+			|| new ActiveXObject("Microsoft.HTTPRequest");
+	xhr.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			func(this, status, id);
+        } else if (this.readyState == 4) {
+
+        }
+
+	};
+	xhr.open("POST", url, true);
+	xhr.send(JSON.stringify(ReimDTO));
+};
+
+
+
 function populateTable(xhr) {
 	if(xhr.responseText) {
 		var res = JSON.parse(xhr.responseText);
@@ -42,24 +62,41 @@ function populateTable(xhr) {
 
             let i = 0;
 			for (let element of res) {
-				let row =  table.insertRow();
+                let row =  table.insertRow();
+                row.id = i;
 				for(key in element) {
-					let cell = row.insertCell();
-      				let text = document.createTextNode(element[key]);
-      				cell.appendChild(text);
+                    let cell = document.createElement("td");
+                    row.appendChild(cell);
+                    let text = document.createTextNode(element[key]);
+                    cell.appendChild(text);
+                     
                 }
                 let cell1 = row.insertCell();
                 let appButton = document.createElement("button");
                 appButton.style = "background-color: #31c6e8;";
-                appButton.id = i;
+                appButton.name = i;
                 appButton.class = "btn btn-primary";
+                appButton.id = "approve";
+                appButton.addEventListener("click", function() {
+                    let elems = document.getElementById(`${this.name}`);
+                    updateReim(elems, "approve");
+                    console.log(`${this.name}`);
+                    console.log(this.name);
+                })
                 cell1.appendChild(appButton);
+                
 
                 let cell2 = row.insertCell();
                 let denyButton = document.createElement("button");
                 denyButton.style = "background-color: #31c6e8;";
-                denyButton.id = i;
-                denyButton.class = "btn btn-primary"
+                denyButton.name = i;
+                denyButton.class = "btn btn-primary";
+                denyButton.id = "deny";
+                denyButton.addEventListener("click", function() {
+                    let elems = document.getElementById(`${this.name}`);
+                    updateReim(elems, "deny");
+                    console.log(`${this.name}`);
+                })
                 cell2.appendChild(denyButton);
 
 				i++;
@@ -67,6 +104,39 @@ function populateTable(xhr) {
 
 		}
 	} 
+}
+
+function updateReim(elems, status) {
+    console.log(elems);
+    for (let i = 0; i < 9; i++) {
+        console.log(elems.childNodes[i].innerHTML);
+    }
+
+    let ReimDTO = {
+        reimId: elems.childNodes[0].innerHTML,
+        amount: elems.childNodes[1].innerHTML,
+        submittedTime: elems.childNodes[2].innerHTML,
+        resolvedTime: "N/A",
+        description: elems.childNodes[4].innerHTML,
+        author: undefined,
+        resolver: "N/A",
+        status: "PENDING",
+        type: elems.childNodes[8].innerHTML
+    }
+
+    elems.childNodes[9].style.display = 'none';
+    elems.childNodes[10].style.display = 'none';
+
+    sendAjaxPost(`http://localhost:8080/project-1/portal/reims/${status}`, editTable, ReimDTO, elems.id, status);
+}
+
+function editTable(xhr, status, id) {
+    let row = document.getElementById(id);
+    if (status === "deny") {
+        row.style.backgroundColor = "#ffb3b3";
+    } else if (status === "approve") {
+        row.style.backgroundColor = "#ccffe6";
+    }
 }
 
 function doPopulateTable() {

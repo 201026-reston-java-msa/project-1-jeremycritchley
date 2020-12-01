@@ -33,7 +33,6 @@ public abstract class GenericDAO<T> {
 		}
 		
 		
-		
 		return ret;
 	}
 	
