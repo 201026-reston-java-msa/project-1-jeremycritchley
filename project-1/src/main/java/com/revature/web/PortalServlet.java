@@ -16,19 +16,29 @@ public class PortalServlet extends HttpServlet {
        
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession(false);
-		System.out.println("In portal Servlet");
-		if (session == null) {
-			response.sendRedirect("login");
-		} else if (session.getAttribute("role").equals("EMPLOYEE")) {
-			System.out.println("Employee");
-			EmployeeHelper eh = new EmployeeHelper();
-			eh.processRequest(request, response);
-		} else if (session.getAttribute("role").equals("MANAGER")) {
-			ManagerHelper mh = new ManagerHelper();
-			mh.processRequest(request, response);
-			System.out.println("Manager");
+		HttpSession session = request.getSession();
+		try {
+			if (session.getAttribute("username") != null) {
+				if (session.getAttribute("role").equals("EMPLOYEE")) {
+					System.out.println("Employee");
+					EmployeeHelper eh = new EmployeeHelper();
+					eh.processRequest(request, response);
+				} else if (session.getAttribute("role").equals("MANAGER")) {
+					ManagerHelper mh = new ManagerHelper();
+					mh.processRequest(request, response);
+					System.out.println("Manager");
+				}
+			} else {
+				session.invalidate();
+				response.sendRedirect("login");
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+			
+			
+		
 		
 	}
 

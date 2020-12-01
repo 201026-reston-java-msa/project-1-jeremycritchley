@@ -14,11 +14,12 @@ public class ErrorServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException {
 		
-		HttpSession session = request.getSession(false);
+		HttpSession session = request.getSession();
 		try {
-			if (session != null) {
+			if (session.getAttribute("username") != null) {
 				request.getRequestDispatcher("portal.html").forward(request, response);
 			} else {
+				session.invalidate();
 				response.sendRedirect("login");
 			}
 		} catch (IOException e) {

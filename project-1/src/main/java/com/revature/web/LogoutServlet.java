@@ -22,14 +22,12 @@ public class LogoutServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession(false);
+		HttpSession session = request.getSession();
 		
-		if (session != null) {
-			session.invalidate();
-		}
+		session.invalidate();
 		
-		request.getRequestDispatcher("index.html").forward(request, response);
-		
+		//request.getRequestDispatcher("index.html").forward(request, response);
+		response.sendRedirect("login");
 		
 		
 		

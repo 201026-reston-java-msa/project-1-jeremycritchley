@@ -19,12 +19,11 @@ public class ManagerHelper implements Helper {
 
 	ObjectMapper om = new ObjectMapper();
 	ManagerServiceImpl ms = new ManagerServiceImpl();
-	HttpSession session;
 	String[] URI;
 	@Override
 	public void processRequest(HttpServletRequest request, HttpServletResponse response) throws JsonParseException, JsonMappingException, IOException, ServletException {
 		URI = request.getRequestURI().replace("/project-1/", "").split("/");
-		session = request.getSession(false);
+		HttpSession session = request.getSession(false);
 		if (URI.length > 1) {
 			if (URI[1].equals("reims")) {
 				if (URI.length == 2) {
@@ -58,6 +57,7 @@ public class ManagerHelper implements Helper {
 	}
 
 	private void usersHelper(HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException, IOException, ServletException {
+		HttpSession session = request.getSession(false);
 		String param = request.getParameter("id");
 		
 		for (String s: URI) {

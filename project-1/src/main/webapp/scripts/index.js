@@ -1,7 +1,6 @@
 $(document).ready(function() {
-    $("#nav-bar").load("./nav.html");
-    $("#loginForm").load("./login-form.html");
-})
+	$("#loginForm").load("./login-form.html");
+});
 
 function sendLogin() {
     let username = document.getElementById("username").value;

@@ -19,13 +19,12 @@ import com.revature.services.EmployeeServiceImpl;
 public class EmployeeHelper implements Helper {
 
 	ObjectMapper om = new ObjectMapper();
-	HttpSession session;
 	EmployeeServiceImpl es;
 	
 	@Override
 	public void processRequest(HttpServletRequest request, HttpServletResponse response)
 			throws JsonParseException, JsonMappingException, IOException, ServletException {
-		session = request.getSession(false);
+		HttpSession session = request.getSession(false);
 
 		String[] URI = request.getRequestURI().replace("/project-1/", "").split("/");
 		es = new EmployeeServiceImpl();
@@ -92,6 +91,7 @@ public class EmployeeHelper implements Helper {
 	}
 	
 	private void reimsHelper(HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException, IOException, ServletException {
+		HttpSession session = request.getSession(false);
 		String status = request.getParameter("status");
 		System.out.println("Status = " + status );
 		if (status == null) {
