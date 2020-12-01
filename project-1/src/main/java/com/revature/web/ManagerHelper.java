@@ -20,9 +20,10 @@ public class ManagerHelper implements Helper {
 	ObjectMapper om = new ObjectMapper();
 	ManagerServiceImpl ms = new ManagerServiceImpl();
 	HttpSession session;
+	String[] URI;
 	@Override
 	public void processRequest(HttpServletRequest request, HttpServletResponse response) throws JsonParseException, JsonMappingException, IOException, ServletException {
-		String[] URI = request.getRequestURI().replace("/project-1/", "").split("/");
+		URI = request.getRequestURI().replace("/project-1/", "").split("/");
 		session = request.getSession(false);
 		if (URI.length > 1) {
 			if (URI[1].equals("reims")) {
@@ -36,6 +37,13 @@ public class ManagerHelper implements Helper {
 						ms.denyReim(rdto, (String) session.getAttribute("user_id"));
 					}
 				
+				} else {
+					try {
+						int n = Integer.parseInt(URI[2]);
+						
+					} catch (Exception e) {
+						request.getRequestDispatcher("portal.html").forward(request, response);
+					}
 				}
 			} else if (URI[1].equals("users")) {
 				usersHelper(request, response);
@@ -51,8 +59,11 @@ public class ManagerHelper implements Helper {
 	}
 
 	private void usersHelper(HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException, IOException, ServletException {
-		// TODO Auto-generated method stub
 		String param = request.getParameter("id");
+		
+		for (String s: URI) {
+			System.out.println(s);
+		}
 		if (param != null ) {
 			if (!param.equals("0")) {
 				// get user by ID
@@ -60,7 +71,7 @@ public class ManagerHelper implements Helper {
 				
 				// else, get the users reims and include them in response
 				UserDTO user = ms.viewByUser(param);
-				if (user != null) {
+				if (user != null && param.equals(session.getAttribute("user_id"))) {
 					response.getWriter().write(om.writeValueAsString(user));
 				}
 				
@@ -73,7 +84,16 @@ public class ManagerHelper implements Helper {
 			
 		} else if ("GET".equals(request.getMethod())) {
 			// get all employees
-			request.getRequestDispatcher("/view-employees.html").include(request, response);
+			if (URI.length == 3) {
+				if (URI[2].equals("all")) {
+					System.out.println("Serving all view employees page");
+					request.getRequestDispatcher("/view-employees.html").include(request, response);
+				}
+			} else {
+				System.out.println("serving personal page");
+				request.getRequestDispatcher("/personal.html").forward(request, response);
+			}
+			
 		}
 		
 	}

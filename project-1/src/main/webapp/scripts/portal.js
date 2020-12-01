@@ -38,7 +38,7 @@ function doViewNewReim() {
 }
 
 function doViewEmployees() {
-	sendAjaxGet("http://localhost:8080/project-1/portal/users", {});
+	sendAjaxGet("http://localhost:8080/project-1/portal/users/all", {});
 }
 
 function doViewPersonal() {
@@ -51,5 +51,4 @@ window.onload = function() {
 
 $(document).ready(function() {
     $("#nav-bar").load("./nav.html");
-    $("#links").load("./employee-links.html");
 })

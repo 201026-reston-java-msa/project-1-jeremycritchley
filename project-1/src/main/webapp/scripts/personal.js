@@ -16,7 +16,7 @@ function populateRes(xhr) {
     if (xhr.responseText) {
         let res = JSON.parse(xhr.responseText);
         if (res) {
-            sendAjaxGet("http://localhost:8080/project-1/portal/users?id=" + res.user_id, populatePersonalInfo);
+            sendAjaxGet("http://localhost:8080/project-1/portal/users/" + res.user_id, populatePersonalInfo);
         }
     }
 }
@@ -28,7 +28,7 @@ function populateResUpdate(xhr) {
         let res = JSON.parse(xhr.responseText);
         if (res) {
             console.log("in populate Res UPDATE " + res.user_id);
-            sendAjaxGet("http://localhost:8080/project-1/portal/users?id=" + res.user_id, updatePersonal);
+            sendAjaxGet(`http://localhost:8080/project-1/portal/users/${res.user_id}`, updatePersonal);
         }
     }
 }
@@ -141,6 +141,7 @@ function updatePersonal(xhr) {
         if (personal === undefined || personal.length === 0) {
 
         } else {
+            
             for (key in personal) {
 
                 if (key == "username") {
@@ -228,7 +229,7 @@ function updatePersonalInfo() {
                 }
             }
             console.log("TRYING TO PUT");
-            xhr.open("POST", "http://localhost:8080/project-1/portal/users", true);
+            xhr.open("POST", "http://localhost:8080/project-1/portal/users/"+user_id, true);
 
             xhr.send(JSON.stringify(udtoHelper));
 }

@@ -51,8 +51,9 @@ public class EmployeeHelper implements Helper {
 				} else {
 					reimsHelper(request, response);
 				}
-			} else if (URI[1].equals("users")) { // portal/users
-				if ("POST".equals(request.getMethod())) {
+			} else if (URI[1].equals("users") && URI.length==3) { // portal/users
+				
+				if ("POST".equals(request.getMethod()) && URI[2].equals(session.getAttribute("user_id"))) {
 					System.out.println("in PUT");
 					UserDTO userUpdate = om.readValue(request.getReader(), UserDTO.class);
 					if (es.updateInfo(userUpdate)) {
@@ -62,8 +63,8 @@ public class EmployeeHelper implements Helper {
 					} else {
 						response.setStatus(204);
 					}
-				} else if ("GET".equals(request.getMethod())) {
-					String user_id = request.getParameter("id");
+				} else if ("GET".equals(request.getMethod()) && URI[2].equals(session.getAttribute("user_id"))) {
+					String user_id = URI[2];
 					System.out.println("MAYBE IN GET???");
 					if (user_id != null) {
 						UserDTO udto = es.viewByUser(user_id);
@@ -73,13 +74,14 @@ public class EmployeeHelper implements Helper {
 							response.setStatus(400);
 						}
 					} else {
-						System.out.println("Serving personal page");
-						request.getRequestDispatcher("/personal.html").forward(request, response);;
+						request.getRequestDispatcher("portal.html").forward(request, response);
+						
 					}
 				}
-			} else {
+			} else if (URI[1].equals("users")){
 				// serve employee home page
-				request.getRequestDispatcher("portal.html").forward(request, response);
+				System.out.println("Serving personal page");
+				request.getRequestDispatcher("/personal.html").forward(request, response);
 			}
 		} else {
 			// serve employee home page

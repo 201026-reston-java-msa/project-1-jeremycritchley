@@ -1,5 +1,6 @@
 package com.revature.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.revature.dao.GenericDAO;
 import com.revature.dao.UserDAO;
 import com.revature.models.Role;
@@ -42,16 +43,19 @@ public class UserDTO {
 		this.role = u.getRole().getRole();
 	}
 	
+	@JsonIgnore
 	public User getUserInstance() {
 		GenericDAO<User> userd = new UserDAO();
 		return getUserInstance(userd);
 	}
 	
+	@JsonIgnore
 	public User getUserInstance(GenericDAO<User> ud) {
 		GenericDAO<User> userd = ud;
 		return userd.selectById(Integer.parseInt(this.userId));
 	}
 	
+	@JsonIgnore
 	public User createUserInstance() {
 		User u = new User();
 		u.setUsername(username);
