@@ -15,8 +15,10 @@ function populateTable(xhr) {
 		var res = JSON.parse(xhr.responseText);
 		console.log(res);
 		if (res === undefined || res.length === 0) {
-
+			document.getElementById("empty-array").innerHTML = "No Requests Of This Type At This Time";
+			document.getElementById("reim-table").innerHTML = "";
 		} else {
+			document.getElementById("empty-array").innerHTML = "";
             let table = document.getElementById("reim-table");
             table.innerHTML = "";
 			let thead = table.createTHead();

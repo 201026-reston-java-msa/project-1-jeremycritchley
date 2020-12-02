@@ -23,15 +23,15 @@ function doSubmitReim() {
 			//sessionStorage.setItem('currentUser',this.responseText);
             //window.location = "http://localhost:8080/project-1/portal";
             let childDiv= document.getElementById("warningText");
-            childDiv.textContent = "Reimbursement Successfully submitted";
-            
+            childDiv.innerHTML = "Reimbursement Successfully submitted";
+            childDiv.style.backgroundColor = "#ccffe6";
 		} 
 		
 		if (this.readyState === 4 && this.status === 204) {
 			console.log("Failed")
             //alert("Failed to log in! Username or password is incorrect")
             let childDiv= document.getElementById("warningText");
-            childDiv.textContent = "Failed to Submit Reimbursement";
+            childDiv.innerHTML = "Failed to Submit Reimbursement";
 		}
 		
 		console.log("Processing");

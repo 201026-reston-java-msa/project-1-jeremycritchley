@@ -35,19 +35,69 @@ function populateTable(xhr) {
 		var res = JSON.parse(xhr.responseText);
 		console.log(res);
 		if (res === undefined || res.length === 0) {
-
+            document.getElementById("empty-array").innerHTML = "No Pending Requests At This Time";
+            document.getElementById("reim-table").innerHTML = "";
 		} else {
+            document.getElementById("empty-array").innerHTML = "";
             let table = document.getElementById("reim-table");
             table.innerHTML = "";
 			let thead = table.createTHead();
 			let row = thead.insertRow();
 			console.log("type of res[0]" + typeof(res[0]) +  res[0]);
-			for (let [key, val] of Object.entries(res[0])) {
-				let th = document.createElement("th");
-				let text = document.createTextNode(key);
-				th.appendChild(text);
-				row.appendChild(th);
-            }
+			
+			let th = document.createElement("th");
+			th.scope = "col";
+			let text = document.createTextNode("#");
+			th.appendChild(text);
+			row.appendChild(th);
+
+			th = document.createElement("th");
+			th.scope = "col";
+			text = document.createTextNode("Amount");
+			th.appendChild(text);
+			row.appendChild(th);
+
+			th = document.createElement("th");
+			th.scope = "col";
+			text = document.createTextNode("Submitted Time");
+			th.appendChild(text);
+			row.appendChild(th);
+
+			th = document.createElement("th");
+			th.scope = "col";
+			text = document.createTextNode("Resolved Time");
+			th.appendChild(text);
+			row.appendChild(th);
+
+			th = document.createElement("th");
+			th.scope = "col";
+			text = document.createTextNode("Description");
+			th.appendChild(text);
+			row.appendChild(th);
+
+			th = document.createElement("th");
+			th.scope = "col";
+			text = document.createTextNode("Author");
+			th.appendChild(text);
+			row.appendChild(th);
+
+			th = document.createElement("th");
+			th.scope = "col";
+			text = document.createTextNode("Resolver");
+			th.appendChild(text);
+			row.appendChild(th);
+
+			th = document.createElement("th");
+			th.scope = "col";
+			text = document.createTextNode("Status");
+			th.appendChild(text);
+			row.appendChild(th);
+
+			th = document.createElement("th");
+			th.scope = "col";
+			text = document.createTextNode("Type");
+			th.appendChild(text);
+			row.appendChild(th);
             let app = document.createElement("th");
             let apptext = document.createTextNode("APPROVE");
 			app.appendChild(apptext);
@@ -73,7 +123,9 @@ function populateTable(xhr) {
                 }
                 let cell1 = row.insertCell();
                 let appButton = document.createElement("button");
-                appButton.style = "background-color: #31c6e8;";
+                //appButton.style = "background-color: #31c6e8;";
+                appButton.style = "background-color: #ccffe6; width: 100%; height: 100%";
+                appButton.innerHTML = "APPROVE"
                 appButton.name = i;
                 appButton.class = "btn btn-primary";
                 appButton.id = "approve";
@@ -88,7 +140,9 @@ function populateTable(xhr) {
 
                 let cell2 = row.insertCell();
                 let denyButton = document.createElement("button");
-                denyButton.style = "background-color: #31c6e8;";
+                denyButton.style = "background-color: #ffb3b3; width: 100%; height: 100%";
+                denyButton.innerHTML = "DENY"
+                deny
                 denyButton.name = i;
                 denyButton.class = "btn btn-primary";
                 denyButton.id = "deny";

@@ -168,7 +168,7 @@ function updatePersonalInfo() {
                     console.log("Failed")
                     //alert("Failed to log in! Username or password is incorrect")
                     let childDiv = document.getElementById("warningText");
-                    childDiv.textContent = "Failed to log in! Username or Password is incorrect";
+                    childDiv.textContent = "Failed to update Info";
                 }
             }
             console.log("TRYING TO PUT");
