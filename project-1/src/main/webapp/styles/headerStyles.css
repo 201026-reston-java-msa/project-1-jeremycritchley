@@ -33,3 +33,20 @@
     background-color: #d4e8e8;
 }
 
+.myCenter {
+    padding:5%;
+    justify-content: center;
+    text-align: center;
+}
+
+.pageTitle {
+    padding: 5%;
+    font-family: Verdana, Geneva, Tahoma;
+    font-size: 5ch;
+    font: bold;
+}
+
+#warningText {
+    background-color: #ff8787;
+}
+

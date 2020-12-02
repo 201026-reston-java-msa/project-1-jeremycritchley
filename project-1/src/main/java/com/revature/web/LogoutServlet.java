@@ -10,8 +10,6 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
-import com.revature.services.ManagerServiceImpl;
-
 /**
  * Servlet implementation class LogoutServlet
  */

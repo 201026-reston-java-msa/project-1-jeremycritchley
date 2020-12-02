@@ -32,6 +32,18 @@ function populateTable(xhr) {
 			for (let element of res) {
 				let row =  table.insertRow();
 				for(key in element) {
+					if (key == "status") {
+						if (element[key] == "APPROVED") {
+							row.style.backgroundColor = "#ccffe6";
+							console.log("APPROVED")
+						} else if (element[key] == "DENIED") {
+							row.style.backgroundColor = "#ffb3b3";
+							console.log("APPROVED")
+						} else if (element[key] == "DENIED") {
+							row.style.backgroundColor = "#dcdee0";
+							console.log("PENDING")
+						}
+					}
 					let cell = row.insertCell();
       				let text = document.createTextNode(element[key]);
       				cell.appendChild(text);

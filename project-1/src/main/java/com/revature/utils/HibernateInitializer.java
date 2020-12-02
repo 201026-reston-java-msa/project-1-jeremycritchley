@@ -6,23 +6,45 @@ import java.util.List;
 
 import com.revature.dao.GenericDAO;
 import com.revature.dao.ReimDAO;
+import com.revature.dao.RoleDAO;
 import com.revature.dao.StatusDAO;
+import com.revature.dao.TypeDAO;
 import com.revature.dao.UserDAO;
 import com.revature.dto.ReimDTO;
-import com.revature.dto.UserDTO;
 import com.revature.models.ReimStatus;
 import com.revature.models.ReimType;
 import com.revature.models.Reimbursement;
 import com.revature.models.Role;
 import com.revature.models.User;
-import com.revature.services.EmployeeService;
-import com.revature.services.EmployeeServiceImpl;
 
 public class HibernateInitializer {
 	
 	public static void main(String[] args) {
-		initializeValues();
-		getValues();		
+		//initializeValues();
+		//getValues();	
+		//addUsers();
+	}
+
+	private static void addUsers() {
+		Role man = RoleDAO.selectById(1);
+		Role emp = RoleDAO.selectById(2);
+		
+		
+		
+		User employ5 = new User("MyspaceTom", "myspace", "Myspace", "Tom", "myspace@email.com", emp);
+		User employ6 = new User("Jeans", "jeans", "Blue", "Jeans", "levis@email.com", emp);
+		User employ7 = new User("Witch", "witch", "Wicked", "Witch", "imawitch@email.com", emp);
+		User employ8 = new User("Sandwhich", "sandwhich", "Sand", "Witch", "sandwhich@email.com", emp);
+		User employ9 = new User("wizard", "wizard", "Wizard", "Merlin", "merlinsbeard@email.com", emp);
+		
+		GenericDAO<User> udao = new UserDAO();
+		
+		System.out.println(udao.insert(employ5));
+		System.out.println(udao.insert(employ6));
+		System.out.println(udao.insert(employ7));
+		System.out.println(udao.insert(employ8));
+		System.out.println(udao.insert(employ9));
+		
 	}
 
 	private static void getValues() {

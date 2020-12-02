@@ -22,19 +22,43 @@ function populateTable(xhr) {
 			let thead = table.createTHead();
 			let row = thead.insertRow();
 			console.log("type of res[0]" + typeof(res[0]) +  res[0]);
-			for (let [key, val] of Object.entries(res[0])) {
-                if (key != "password" && key != "userInstance") {
-                    let th = document.createElement("th");
-				    let text = document.createTextNode(key);
-				    th.appendChild(text);
-				    row.appendChild(th);
-                }
-			}
+
+					
+			let th = document.createElement("th");
+			th.scope = "col";
+			let text = document.createTextNode("User ID");
+			th.appendChild(text);
+			row.appendChild(th);
+
+			th = document.createElement("th");
+			th.scope = "col";
+			text = document.createTextNode("Username");
+			th.appendChild(text);
+			row.appendChild(th);
+
+			th = document.createElement("th");
+			th.scope = "col";
+			text = document.createTextNode("First Name");
+			th.appendChild(text);
+			row.appendChild(th);
+
+			th = document.createElement("th");
+			th.scope = "col";
+			text = document.createTextNode("Last Name");
+			th.appendChild(text);
+			row.appendChild(th);
+
+			th = document.createElement("th");
+			th.scope = "col";
+			text = document.createTextNode("Email");
+			th.appendChild(text);
+			row.appendChild(th);
 
 			for (let element of res) {
 				let row =  table.insertRow();
+				row.scope = "row";
 				for(key in element) {
-                    if (key != "password" && key != "userInstance") {
+                    if (key != "password" && key != "role") {
                         let cell = row.insertCell();
       				    let text = document.createTextNode(element[key]);
       				    cell.appendChild(text);

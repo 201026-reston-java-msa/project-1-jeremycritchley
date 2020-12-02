@@ -24,7 +24,8 @@ function populateTable(xhr) {
 			console.log("type of res[0]" + typeof(res[0]) +  res[0]);
 			for (let [key, val] of Object.entries(res[0])) {
                 if (key != "password" && key != "userInstance") {
-                    let th = document.createElement("th");
+					let th = document.createElement("th");
+					th.scope = "col";
 				    let text = document.createTextNode(key);
 				    th.appendChild(text);
 				    row.appendChild(th);
@@ -33,6 +34,7 @@ function populateTable(xhr) {
 
 			for (let element of res) {
 				let row =  table.insertRow();
+				row.scope = "row";
 				for(key in element) {
                     if (key != "password" && key != "userInstance") {
                         let cell = row.insertCell();
