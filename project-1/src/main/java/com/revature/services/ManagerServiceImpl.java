@@ -3,6 +3,8 @@ package com.revature.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.revature.dao.GenericDAO;
 import com.revature.dao.ReimDAO;
 import com.revature.dao.StatusDAO;
@@ -17,6 +19,7 @@ import com.revature.utils.DateStringify;
 
 public class ManagerServiceImpl extends EmployeeServiceImpl implements ManagerService {
 	
+	private static Logger log = Logger.getLogger(ManagerServiceImpl.class);
 	private GenericDAO<User> userd;
 	private GenericDAO<Reimbursement> reimd;
 	
@@ -79,6 +82,13 @@ public class ManagerServiceImpl extends EmployeeServiceImpl implements ManagerSe
 				reim.setType(TypeDAO.selectById(4));
 			}
 			ret = reimd.update(reim);
+			if (ret) {
+				log.info("UPDATED REIMBURSEMENT " + rdto.getReimId());
+			} else {
+				log.warn("FAILED TO UPDATE REIMBURSEMENT " + rdto.getReimId());
+			}
+		} else {
+			log.warn("FAILED TO UPDATE REIMBURSEMENT " + rdto.getReimId());
 		}
 
 		return ret;

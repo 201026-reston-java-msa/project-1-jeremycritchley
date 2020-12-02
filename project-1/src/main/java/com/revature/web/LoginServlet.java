@@ -68,7 +68,6 @@ public class LoginServlet extends HttpServlet {
 			
 			// if user exists, login user
 			if (udto != null) {
-				System.out.println(udto);
 				session = request.getSession();
 				session.setAttribute("user_id", udto.getUserId());
 				session.setAttribute("username", udto.getUsername());

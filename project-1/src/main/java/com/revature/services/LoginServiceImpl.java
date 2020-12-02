@@ -1,4 +1,5 @@
 package com.revature.services;
+import org.apache.log4j.Logger;
 
 import com.revature.dao.GenericDAO;
 import com.revature.dao.UserDAO;
@@ -7,7 +8,8 @@ import com.revature.models.User;
 import com.revature.utils.PasswordHash;
 
 public class LoginServiceImpl implements LoginService{
-
+	private static Logger log = Logger.getLogger(LoginServiceImpl.class);
+	
 	private GenericDAO<User> userd;
 	
 	public LoginServiceImpl(GenericDAO<User> userd) {
@@ -36,6 +38,8 @@ public class LoginServiceImpl implements LoginService{
 			// hash password before checking equality
 			if (PasswordHash.checkMatch(password, user.getPassword())) {
 				ret = new UserDTO(user);
+				System.out.println("USER " + ret.getUserId() + " LOGGING IN");
+				log.info("USER " + ret.getUserId() + " LOGGING IN");
 			}
 		}
 		

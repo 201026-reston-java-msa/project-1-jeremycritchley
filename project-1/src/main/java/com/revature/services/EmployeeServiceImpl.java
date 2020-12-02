@@ -3,6 +3,8 @@ package com.revature.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.revature.dao.GenericDAO;
 import com.revature.dao.ReimDAO;
 import com.revature.dao.StatusDAO;
@@ -16,6 +18,7 @@ import com.revature.utils.DateStringify;
 
 public class EmployeeServiceImpl implements EmployeeService {
 	
+	private static Logger log = Logger.getLogger(EmployeeServiceImpl.class);
 	private GenericDAO<Reimbursement> reimd;
 	private GenericDAO<User> userd;
 	
@@ -73,6 +76,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 			u.setLastName(udto.getLastName());
 			u.setUsername(udto.getUsername());
 			ret = userd.update(u);
+			if (ret) {
+				log.info("USER " + udto.getUserId() + " UPDATING INFO");
+			} else {
+				log.warn("FAILED TO UPDATE USER " + u.getUserId());
+			}
+			
+		} else {
+			log.warn("INVALID ATTEMPT UPDATE TO USER");
 		}
 		
 		return ret;
@@ -107,7 +118,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 			if (reim.getAmount() > 0) {
 				if (reim.getAuthor() != null) {
 					ret = reimd.insert(reim);
-					System.out.println(ret);
+					if (ret > 0) {
+						log.info("REIM SUBMITTED WITH ID " + ret + " BY USER " + reim.getAuthor().getUserId());
+					}
 				}
 			}
 		}
