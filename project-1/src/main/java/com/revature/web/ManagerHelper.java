@@ -60,9 +60,6 @@ public class ManagerHelper implements Helper {
 		HttpSession session = request.getSession(false);
 		String param = request.getParameter("id");
 		
-		for (String s: URI) {
-			System.out.println(s);
-		}
 		if (param != null ) {
 			if (!param.equals("0")) {
 				// get user by ID
@@ -85,7 +82,6 @@ public class ManagerHelper implements Helper {
 			// get all employees
 			if (URI.length == 3) {
 				if (URI[2].equals("all")) {
-					System.out.println("Serving all view employees page");
 					request.getRequestDispatcher("/view-employees.html").include(request, response);
 				} else {
 					try {
@@ -96,7 +92,6 @@ public class ManagerHelper implements Helper {
 					}
 				}
 			} else {
-				System.out.println("serving personal page");
 				request.getRequestDispatcher("/personal.html").forward(request, response);
 			}
 			
@@ -105,7 +100,6 @@ public class ManagerHelper implements Helper {
 				if (URI[2].equals(session.getAttribute("user_id"))) {
 					UserDTO userUpdate = om.readValue(request.getReader(), UserDTO.class);
 					if (ms.updateInfo(userUpdate)) {
-						System.out.println("supposedly updated user");
 						session.setAttribute("username", userUpdate.getUsername());
 						response.setStatus(200);
 					} else {

@@ -15,6 +15,15 @@ public abstract class GenericDAO<T> {
 	
 	private static Logger log = Logger.getLogger(GenericDAO.class);
 	
+	
+	/**
+	 * Generic Method for inserting into the DB  using Hibernate
+	 * 
+	 * 
+	 * @param t - 	Reimbursement or User object to be inserted
+	 * @return - 	new int ID generated for the new T
+	 * 			OR	0 if failed
+	 */
 	public int insert(T t) {
 		int ret = 0;
 		
@@ -43,6 +52,14 @@ public abstract class GenericDAO<T> {
 		return ret;
 	}
 	
+	/**
+	 * Generic Method for Updating Reimbursements and Users with Hibernate
+	 * 
+	 * 
+	 * @param t - 	T object to be updated
+	 * @return - 	ID of T generated
+	 * 			OR 	0 if not found 
+	 */
 	public boolean update(T t) {
 		boolean ret = true;
 		
@@ -69,9 +86,36 @@ public abstract class GenericDAO<T> {
 		return ret;
 	}
 	
+	
+	/**
+	 * Select T by its ID generated from insert
+	 * 
+	 * @param id - 	ID of T to be selected
+	 * @return	- 	The T with id as id
+	 * 			OR	null if not found
+	 */
 	public abstract T selectById(int id);
 	
+	/**
+	 * Select All T where param of T is equal to val
+	 * 
+	 * @param param - 	attribute of T : String must exactly match that of the Column 
+	 * 					name denoted in JPA annotations in Models classes
+	 * 					
+	 * @param val -		The value of attribute param
+	 * @return - 		List of all T where param = va
+	 */
 	public abstract List<T> selectAll(String param, String val);
 	
+	/**
+	 * Select All T where param of T is equal to val
+	 * Use for instances where there should only be one case that param = val
+	 * 
+	 * @param param - 	attribute of T : String must exactly match that of the Column 
+	 * 					name denoted in JPA annotations in Models classes
+	 * 					
+	 * @param val -		The value of attribute param
+	 * @return - 		First T where param = val
+	 */
 	public abstract T selectByParam(String param, String val);
 }

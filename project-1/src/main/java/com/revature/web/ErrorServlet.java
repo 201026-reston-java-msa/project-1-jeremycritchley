@@ -35,7 +35,6 @@ public class ErrorServlet extends HttpServlet {
 	
 	@Override
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException {
-		System.out.println(".... Originally in do Put...");
 		doGet(request, response);
 	}
 	

@@ -32,6 +32,7 @@ function doSubmitReim() {
             //alert("Failed to log in! Username or password is incorrect")
             let childDiv= document.getElementById("warningText");
             childDiv.innerHTML = "Failed to Submit Reimbursement";
+            childDiv.style.backgroundColor = "#ff8787";
 		}
 		
 		console.log("Processing");

@@ -10,6 +10,10 @@ import com.revature.models.Reimbursement;
 
 public class ReimDTO {
 	
+	/**
+	 * Meant for lighter transfer of data and Object Mapping to JSON
+	 */
+	
 	private String reimId;
 	private String amount;
 	private String submittedTime;
@@ -81,20 +85,38 @@ public class ReimDTO {
 		this.type = reim.getType().getType();
 	}
 	
+	/**
+	 * 
+	 * @return	Returns Reimbursement Object of this ReimDTO instance or null
+	 */
 	@JsonIgnore
 	public Reimbursement getReimInstance() {
 		GenericDAO<Reimbursement> reimd = new ReimDAO();
 		return getReimInstance(reimd);
 	}
 	
+	/**
+	 * Used for Testing or already instantiated DAO
+	 * 	- Used for Mocking in this project
+	 * 
+	 * @param rd - DAO to get Reimbursement From
+	 * @return	 - Reimbursement Object of this ReimDTO instance or null
+	 */
 	@JsonIgnore
 	public Reimbursement getReimInstance(GenericDAO<Reimbursement> rd) {
 		GenericDAO<Reimbursement> reimd = rd;
 		return reimd.selectById(Integer.parseInt(reimId));
 	}
 	
+	/**
+	 * Used when creating/inserting Reimbursements into DB
+	 * Creates a new Reimbursement object without a generated ID and not yet in DB
+	 * 
+	 * @return	Reimbursement object created from this ReimDTO
+	 */
 	public Reimbursement createReimInstance(UserDAO userd) {
 		Reimbursement reim = new Reimbursement();
+		
 		reim.setAmount(Double.parseDouble(this.amount));
 		reim.setSubmittedTime(this.submittedTime);
 		

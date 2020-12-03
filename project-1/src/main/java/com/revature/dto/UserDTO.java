@@ -8,6 +8,10 @@ import com.revature.models.User;
 
 public class UserDTO {
 	
+	/**
+	 * Meant for lighter transfer of data and Object Mapping to JSON
+	 */
+	
 	private String userId;
 	private String username;
 	private String password;
@@ -43,18 +47,35 @@ public class UserDTO {
 		this.role = u.getRole().getRole();
 	}
 	
+	/**
+	 * 
+	 * @return	Returns User Object of this UserDTO instance or null
+	 */
 	@JsonIgnore
 	public User getUserInstance() {
 		GenericDAO<User> userd = new UserDAO();
 		return getUserInstance(userd);
 	}
 	
+	/**
+	 * Used for Testing or already instantiated DAO
+	 * 	- Used for Mocking in this project
+	 * 
+	 * @param rd - DAO to get User from
+	 * @return	 - User Object of this UserDTO instance or null
+	 */
 	@JsonIgnore
 	public User getUserInstance(GenericDAO<User> ud) {
 		GenericDAO<User> userd = ud;
 		return userd.selectById(Integer.parseInt(this.userId));
 	}
 	
+	/**
+	 * Used when creating/inserting Users into DB
+	 * Creates a new User object without a generated ID and not yet in DB
+	 * 
+	 * @return	User object created from this UserDTO
+	 */
 	@JsonIgnore
 	public User createUserInstance() {
 		User u = new User();

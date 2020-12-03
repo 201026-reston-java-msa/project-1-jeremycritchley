@@ -90,6 +90,7 @@ public class DriverTest {
 		ReimDTO rdto = Mockito.mock(ReimDTO.class);
 		when(rdto.createReimInstance(userd)).thenReturn(reim);
 		when(rdto.getReimInstance(reimd)).thenReturn(reim);
+		when(rdto.getType()).thenReturn("lodge");
 		
 		when(reimd.insert(reim)).thenReturn(1);
 		when(userd.selectById(1)).thenReturn(u);
@@ -161,6 +162,7 @@ public class DriverTest {
 		ReimDTO rdto = Mockito.mock(ReimDTO.class);
 		when(rdto.createReimInstance(userd)).thenReturn(reim);
 		when(rdto.getReimInstance(reimd)).thenReturn(reim);
+		when(rdto.getType()).thenReturn("lodge");
 		
 		when(reimd.update(reim)).thenReturn(true);
 		when(userd.selectById(1)).thenReturn(u);
@@ -175,6 +177,7 @@ public class DriverTest {
 		ReimDTO rdto = Mockito.mock(ReimDTO.class);
 		when(rdto.createReimInstance(userd)).thenReturn(reim);
 		when(rdto.getReimInstance(reimd)).thenReturn(reim);
+		when(rdto.getType()).thenReturn("lodge");
 		
 		when(reimd.update(reim)).thenReturn(false);
 		when(userd.selectById(1)).thenReturn(u);
@@ -189,6 +192,7 @@ public class DriverTest {
 		ReimDTO rdto = Mockito.mock(ReimDTO.class);
 		when(rdto.createReimInstance(userd)).thenReturn(reim);
 		when(rdto.getReimInstance(reimd)).thenReturn(reim);
+		when(rdto.getType()).thenReturn("lodge");
 		
 		when(reimd.update(reim)).thenReturn(true);
 		when(userd.selectById(1)).thenReturn(u);
@@ -203,6 +207,7 @@ public class DriverTest {
 		ReimDTO rdto = Mockito.mock(ReimDTO.class);
 		when(rdto.createReimInstance(userd)).thenReturn(reim);
 		when(rdto.getReimInstance(reimd)).thenReturn(reim);
+		when(rdto.getType()).thenReturn("lodge");
 		
 		when(reimd.update(reim)).thenReturn(false);
 		when(userd.selectById(1)).thenReturn(u);

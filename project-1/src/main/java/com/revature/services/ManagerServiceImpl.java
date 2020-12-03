@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-
 import com.revature.dao.GenericDAO;
 import com.revature.dao.ReimDAO;
 import com.revature.dao.StatusDAO;
@@ -104,7 +103,6 @@ public class ManagerServiceImpl extends EmployeeServiceImpl implements ManagerSe
 		if (employees != null) {
 			dtos = new ArrayList<UserDTO>();
 			for (User e: employees) {
-				System.out.println(e.getFirstName());
 				dtos.add(new UserDTO(e));
 			}
 		}

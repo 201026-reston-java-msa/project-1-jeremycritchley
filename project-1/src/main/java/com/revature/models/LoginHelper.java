@@ -1,3 +1,7 @@
+/**
+ * Class to aid in mapping Login Information (Username & Password)
+ * From Object mapper to Java
+ */
 package com.revature.models;
 
 public class LoginHelper {

@@ -8,7 +8,6 @@ import com.revature.dao.GenericDAO;
 import com.revature.dao.ReimDAO;
 import com.revature.dao.RoleDAO;
 import com.revature.dao.StatusDAO;
-import com.revature.dao.TypeDAO;
 import com.revature.dao.UserDAO;
 import com.revature.dto.ReimDTO;
 import com.revature.models.ReimStatus;

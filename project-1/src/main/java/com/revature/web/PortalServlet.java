@@ -20,13 +20,11 @@ public class PortalServlet extends HttpServlet {
 		try {
 			if (session.getAttribute("username") != null) {
 				if (session.getAttribute("role").equals("EMPLOYEE")) {
-					System.out.println("Employee");
 					EmployeeHelper eh = new EmployeeHelper();
 					eh.processRequest(request, response);
 				} else if (session.getAttribute("role").equals("MANAGER")) {
 					ManagerHelper mh = new ManagerHelper();
 					mh.processRequest(request, response);
-					System.out.println("Manager");
 				}
 			} else {
 				session.invalidate();

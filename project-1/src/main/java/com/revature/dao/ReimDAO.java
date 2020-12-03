@@ -15,7 +15,10 @@ public class ReimDAO extends GenericDAO<Reimbursement>{
 		Reimbursement reim = ses.get(Reimbursement.class, id);
 		return reim;
 	}
-
+	
+	/*
+	 * Naive Implementation - must be provided hibernate column name as param
+	 */
 	@Override
 	public List<Reimbursement> selectAll(String param, String val) {
 		Session ses = HibernateUtil.getSession();
@@ -23,6 +26,10 @@ public class ReimDAO extends GenericDAO<Reimbursement>{
 		return reims;
 	}
 
+	/*
+	 * Naive Implementation, getting first element from selectAll
+	 * 	- should only use when only one instance of param = val should be in the DB
+	 */
 	@Override
 	public Reimbursement selectByParam(String param, String val) {
 		List<Reimbursement> reims = selectAll(param, val);

@@ -34,7 +34,6 @@ public class LoginServlet extends HttpServlet {
 		if (session != null ) {
 			response.sendRedirect("portal");
 		} else {
-			System.out.println("in login servlet");
 			request.getRequestDispatcher("index.html").forward(request, response);
 		}
 		
